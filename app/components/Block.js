@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 
 class Block extends Component {
-	
+	constructor (props) {
+  		super(props);
+	}
 	render(){
 		const car = {this.props.car};
 		return (

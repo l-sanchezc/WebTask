@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 
 class Gallery extends Component {
+	constructor (props) {
+  		super(props);
+	}
 	handlePhoto(){		
 		this.props.handleResponse(photo)
 	}

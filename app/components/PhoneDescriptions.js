@@ -3,6 +3,9 @@ import {Glyphicon} from "react-bootstrap"
 import 	numbro from "numbro"
 
 class PhoneDescriptions extends Component {
+	constructor (props) {
+  		super(props);
+	}
 	render(){
 		const car = {this.props.car};
 		const minPrice = car.min_price;

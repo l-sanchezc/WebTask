@@ -3,13 +3,16 @@ import {Glyphicon} from "react-bootstrap"
 import numbro from "numbro"
 
 class Descriptions extends Component {
+	constructor (props) {
+  		super(props);
+	}
 	render(){
-		const car = {this.props.car};
-		const minPrice = car.min_price;
+		let car = {this.props.car};
+		let minPrice = car.min_price;
 		minPrice = numbro(minPrice).formatCurrency('$0,0');
-		const maxPrice = car.max_price;
+		let maxPrice = car.max_price;
 		maxPrice = numbro(maxPrice).formatCurrency('$0,0');
-		const mileage = car.mileage;
+		let mileage = car.mileage;
 		mileage= numbro(mileage).format('0,0');
 		return (
 			<div className='description'>
