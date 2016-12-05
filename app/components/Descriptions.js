@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
 import {Glyphicon} from "react-bootstrap"
 import numbro from "numbro"
-import cars from '../stores/cars';
 
 class Descriptions extends Component {
 	render(){
-		const car = cars[0];
-		var minPrice = car.min_price;
+		const car = {this.props.car};
+		const minPrice = car.min_price;
 		minPrice = numbro(minPrice).formatCurrency('$0,0');
-		var maxPrice = car.max_price;
+		const maxPrice = car.max_price;
 		maxPrice = numbro(maxPrice).formatCurrency('$0,0');
-		var mileage = car.mileage;
+		const mileage = car.mileage;
 		mileage= numbro(mileage).format('0,0');
-		//I use a fake object till I implement the REST Api
 		return (
 			<div className='description'>
 				<h4 className='remarked'>{car.car_model}</h4>

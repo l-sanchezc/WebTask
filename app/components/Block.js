@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import cars from '../stores/cars';
 
 class Block extends Component {
 	
 	render(){
-		const car = cars[0];
+		const car = {this.props.car};
 		return (
 			<div className='block'>
 			<table>

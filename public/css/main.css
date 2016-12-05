@@ -280,6 +280,7 @@ table{
   .block{
     background-color: #FFFFFF;
     padding-left: 40px;
+    padding-right: 40px;
     margin-top: 16px;
     max-width: 100%;
     float: none;

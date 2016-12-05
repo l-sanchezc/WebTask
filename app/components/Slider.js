@@ -3,11 +3,10 @@
 import React, { Component } from 'react'
 import ReactDom from 'react-dom'
 import { Carousel } from 'react-responsive-carousel';
-import cars from '../stores/cars'
 
 class Slider extends Component {
 	render() {
-		const car = cars[0];
+		cconst car = {this.props.car};
         return (
             <Carousel showThumbs={false} showArrows={false} showStatus={false}>
                 <div>

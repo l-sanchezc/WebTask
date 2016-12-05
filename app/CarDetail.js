@@ -11,20 +11,14 @@ import Block from './components/Block'
 
 class CarDetail extends Component {
 	handleResponse(photo) {
-	  console.log(photo)
-	  //photo that has to appear when the user click on one image of the gallery
+	  this.setState({phot: photo.data})
 	}
 	componentDidMount(){
 		var fetchData = axios.get('http://localhost:3000/cars/#1395P')
-			.then(function (response)	{
-				console.log(response.data)
-				//response.data has the car object
+			.then(response =>	{
+				this.setState({car: response.data});
 		})
 	}
-
-						/*
-						default should be car.photos[0] from the car that we got from axios
-						*/
 	render(){
 		return (
 			<div>  
@@ -32,23 +26,23 @@ class CarDetail extends Component {
 				<MediaQuery query='(min-width: 1024px)'> 
 					<div className="wrapper">
 						<img className='photo' src='/public/img/0.jpg'/>
-						<Descriptions />
+						<Descriptions car={this.state.car}/>
 					</div>
-					<Gallery handleResponse={this.handleResponse} car={this.props.car} />
+					<Gallery handleResponse={this.handleResponse} car={this.state.car} />
 					<div className="wrap-block">
-						<Block title={'EXTERIOR'}/>
-						<Block title={'PERFORMANCE'}/>
+						<Block title={'EXTERIOR'} car={this.state.car}/>
+						<Block title={'PERFORMANCE' car={this.state.car}}/>
 					</div>
 				</MediaQuery>
 				<MediaQuery query='(max-width: 1023px)'>
 				<div className="container-phone">
-					<Slider />
-					<PhoneDescriptions />
+					<Slider car={this.state.car}/>
+					<PhoneDescriptions car={this.state.car}/>
 				</div>
 				<div className="call">CALL US</div>
 				<div className="phone-blocks">
-					<Block title={'EXTERIOR'}/>
-					<Block title={'PERFORMANCE'}/>
+					<Block title={'EXTERIOR'} car={this.state.car}/>
+					<Block title={'PERFORMANCE'} car={this.state.car}/>
 				</div>
 				</MediaQuery>
 			</div>

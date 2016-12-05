@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import cars from '../stores/cars';
 
 class Gallery extends Component {
 	handlePhoto(){		
 		this.props.handleResponse(photo)
 	}
 	render(){
-		const car = cars[0];
+		const car = {this.props.car};
 		return (
 			<div className='gallery'>
 				<div className="container">
