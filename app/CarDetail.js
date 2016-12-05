@@ -15,6 +15,7 @@ class CarDetail extends Component {
 	componentDidMount(){
 		var fetchData = axios.get('http://localhost:3000/cars/#1395P')
 			.then(response =>	{
+				console.log(response.data);
 				this.setState({car: response.data});
 		})
 	}
