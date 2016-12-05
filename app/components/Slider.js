@@ -6,7 +6,7 @@ import { Carousel } from 'react-responsive-carousel';
 
 class Slider extends Component {
 	render() {
-		cconst car = {this.props.car};
+		const car = {this.props.car};
         return (
             <Carousel showThumbs={false} showArrows={false} showStatus={false}>
                 <div>

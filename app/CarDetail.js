@@ -11,7 +11,6 @@ import Block from './components/Block'
 
 class CarDetail extends Component {
 	handleResponse(photo) {
-	  this.setState({phot: photo.data})
 	}
 	componentDidMount(){
 		var fetchData = axios.get('http://localhost:3000/cars/#1395P')
@@ -31,7 +30,7 @@ class CarDetail extends Component {
 					<Gallery handleResponse={this.handleResponse} car={this.state.car} />
 					<div className="wrap-block">
 						<Block title={'EXTERIOR'} car={this.state.car}/>
-						<Block title={'PERFORMANCE' car={this.state.car}}/>
+						<Block title={'PERFORMANCE'} car={this.state.car}/>
 					</div>
 				</MediaQuery>
 				<MediaQuery query='(max-width: 1023px)'>
