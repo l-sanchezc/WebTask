@@ -5,6 +5,12 @@ import cars from '../stores/cars';
 class PhoneDescriptions extends Component {
 	render(){
 		const car = cars[0];
+		var minPrice = car.min_price;
+		minPrice = numbro(minPrice).formatCurrency('$0,0');
+		var maxPrice = car.max_price;
+		maxPrice = numbro(maxPrice).formatCurrency('$0,0');
+		var mileage = car.mileage;
+		mileage= numbro(mileage).format('0,0');
 		return (
 			<div className="wrapper">
 				<div className='description-left'>
@@ -12,7 +18,7 @@ class PhoneDescriptions extends Component {
 					<h4 className='field'>Year</h4>
 					<h4 className='data'>{car.year}</h4>
 					<h4 className='field'>Price Range</h4>
-					<h4 className='data'>{car.price}</h4>
+					<h4 className='data'>{minPrice} - {maxPrice}</h4>
 					<h4 className='field'>Mileage</h4>
 					<h4 className='data'>{car.mileage} miles</h4>
 				</div>
