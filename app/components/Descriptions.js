@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Glyphicon} from "react-bootstrap"
-import 	numbro from "numbro"
+import numbro from "numbro"
 import cars from '../stores/cars';
 
 class Descriptions extends Component {

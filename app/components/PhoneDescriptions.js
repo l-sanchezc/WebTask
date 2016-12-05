@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Glyphicon} from "react-bootstrap"
+import 	numbro from "numbro"
 import cars from '../stores/cars';
 
 class PhoneDescriptions extends Component {
@@ -20,7 +21,7 @@ class PhoneDescriptions extends Component {
 					<h4 className='field'>Price Range</h4>
 					<h4 className='data'>{minPrice} - {maxPrice}</h4>
 					<h4 className='field'>Mileage</h4>
-					<h4 className='data'>{car.mileage} miles</h4>
+					<h4 className='data'>{mileage} miles</h4>
 				</div>
 				<div className='description-right'>
 					<h4 className='field'>Item Number: {car.item_number}</h4>
