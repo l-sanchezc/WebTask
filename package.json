@@ -1,7 +1,7 @@
 {
   "name": "webtask",
-  "version": "1.0.0",
-  "description": "",
+  "version": "2.1.0",
+  "description": "Web application using ReactJS and a Rest API using Node.js to feed the web with data from a mongodb database.",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lazaro Sanchez Campos",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "axios": "^0.15.3",
     "babel-loader": "^6.2.2",
@@ -34,7 +34,6 @@
     "react-responsive": "^1.2.5",
     "react-responsive-carousel": "^3.0.21",
     "react-router": "^3.0.0",
-    "swig": "^1.4.2",
     "webpack": "^1.12.13"
   },
   "devDependencies": {
