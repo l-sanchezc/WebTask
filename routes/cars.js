@@ -10,7 +10,7 @@ var server = new Server('localhost', 27017, {auto_reconnect: true});
 //It creates the database with the name cardb
 var db = new Db('cardb', server);
 
-//It cheks if the database already exists
+//It checks if the database already exists
 db.open(function(err, db) {
     if(!err) {
         console.log("Connected to 'cardb' database");
