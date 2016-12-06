@@ -2,8 +2,7 @@
 
 Web application using ReactJS and a Rest API using Node.js to feed the web with data from a mongodb database.
 
-To run the application you need to have installed MongoDB database
-Installing MongoDB
+# To run the application you need to have installed MongoDB database.
 
 To install MongoDB on your specific platform, refer to the MongoDB QuickStart. Here are some quick steps to install MongoDB on a Mac:
 
