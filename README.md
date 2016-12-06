@@ -2,9 +2,11 @@
 
 Web application using ReactJS and a Rest API using Node.js to feed the web with data from a mongodb database.
 
-# To run the application you need to have installed MongoDB database.
+# Installation
 
-To install MongoDB on your specific platform, refer to the MongoDB QuickStart. Here are some quick steps to install MongoDB on a Mac:
+First of all, to run the application you need to have installed MongoDB database.
+
+To install MongoDB on your specific platform, refer to the MongoDB QuickStart (https://docs.mongodb.com/manual/installation/). Here are some quick steps to install MongoDB on a Mac:
 
 1. Open a terminal window and type the following command to download the latest release:
 curl http://downloads.mongodb.org/osx/mongodb-osx-x86_64-3.2.11.tgz > ~/Downloads/mongo.tgz
@@ -29,8 +31,7 @@ sudo chown `id -u` /data/db
 cd /usr/local/mongodb
 ./bin/mongod
 
+Once we have installed MongoDB database, we have to install all the modules of the application and then run it.
 
-Refer to the MongoDB Interactive Shell documentation for more information.
-
-1. Run npm install
-2. Run npm start
+7. Run npm install
+8. Run npm start
