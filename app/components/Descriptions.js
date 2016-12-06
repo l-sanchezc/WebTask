@@ -7,8 +7,10 @@ class Descriptions extends Component {
   		super(props);
 	}
 	render(){
-		let car = {this.props.car};
+		const car = this.props.car;
+		console.log(car);
 		let minPrice = car.min_price;
+		console.log(car.min_price);
 		minPrice = numbro(minPrice).formatCurrency('$0,0');
 		let maxPrice = car.max_price;
 		maxPrice = numbro(maxPrice).formatCurrency('$0,0');

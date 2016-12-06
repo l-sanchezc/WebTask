@@ -9,7 +9,7 @@ class Slider extends Component {
         super(props);
     }
 	render() {
-		const car = {this.props.car};
+        const car = this.props.car;
         return (
             <Carousel showThumbs={false} showArrows={false} showStatus={false}>
                 <div>

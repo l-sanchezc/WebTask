@@ -5,7 +5,7 @@ class Block extends Component {
   		super(props);
 	}
 	render(){
-		const car = {this.props.car};
+		const car = this.props.car;
 		return (
 			<div className='block'>
 			<table>

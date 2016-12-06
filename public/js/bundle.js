@@ -68,23 +68,23 @@
 	
 	var _Navbar2 = _interopRequireDefault(_Navbar);
 	
-	var _Descriptions = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Descriptions\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _Descriptions = __webpack_require__(438);
 	
 	var _Descriptions2 = _interopRequireDefault(_Descriptions);
 	
-	var _PhoneDescriptions = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/PhoneDescriptions\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _PhoneDescriptions = __webpack_require__(479);
 	
 	var _PhoneDescriptions2 = _interopRequireDefault(_PhoneDescriptions);
 	
-	var _Slider = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Slider\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _Slider = __webpack_require__(480);
 	
 	var _Slider2 = _interopRequireDefault(_Slider);
 	
-	var _Gallery = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Gallery\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _Gallery = __webpack_require__(491);
 	
 	var _Gallery2 = _interopRequireDefault(_Gallery);
 	
-	var _Block = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./components/Block\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	var _Block = __webpack_require__(492);
 	
 	var _Block2 = _interopRequireDefault(_Block);
 	
@@ -99,71 +99,84 @@
 	var CarDetail = function (_Component) {
 		_inherits(CarDetail, _Component);
 	
-		function CarDetail() {
+		function CarDetail(props) {
 			_classCallCheck(this, CarDetail);
 	
-			return _possibleConstructorReturn(this, (CarDetail.__proto__ || Object.getPrototypeOf(CarDetail)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (CarDetail.__proto__ || Object.getPrototypeOf(CarDetail)).call(this, props));
+	
+			_this.state = { car: {}, photo: '' };
+			return _this;
 		}
 	
 		_createClass(CarDetail, [{
-			key: 'handleResponse',
-			value: function handleResponse(photo) {}
-		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
 				var _this2 = this;
 	
 				var fetchData = _axios2.default.get('http://localhost:3000/cars/#1395P').then(function (response) {
-					console.log(response.data);
-					_this2.setState({ car: response.data });
+					_this2.setState({ car: response.data[0] });
+					_this2.setState({ photo: _this2.state.car.photos[0] });
 				});
+			}
+		}, {
+			key: '_handleClick',
+			value: function _handleClick(newPhoto) {
+				this.setState({ photo: newPhoto });
 			}
 		}, {
 			key: 'render',
 			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					null,
-					_react2.default.createElement(_Navbar2.default, null),
-					_react2.default.createElement(
-						_reactResponsive2.default,
-						{ query: '(min-width: 1024px)' },
+				var _this3 = this;
+	
+				if (Object.keys(this.state.car).length > 15) {
+					return _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(_Navbar2.default, null),
 						_react2.default.createElement(
-							'div',
-							{ className: 'wrapper' },
-							_react2.default.createElement('img', { className: 'photo', src: '/public/img/0.jpg' }),
-							_react2.default.createElement(_Descriptions2.default, { car: this.state.car })
+							_reactResponsive2.default,
+							{ query: '(min-width: 1024px)' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'wrapper' },
+								_react2.default.createElement('img', { className: 'photo', src: this.state.photo }),
+								_react2.default.createElement(_Descriptions2.default, { car: this.state.car })
+							),
+							_react2.default.createElement(_Gallery2.default, { car: this.state.car, initialPhoto: this.state.photo, callbackParent: function callbackParent(newPhoto) {
+									return _this3._handleClick(newPhoto);
+								} }),
+							_react2.default.createElement(
+								'div',
+								{ className: 'wrap-block' },
+								_react2.default.createElement(_Block2.default, { title: 'EXTERIOR', car: this.state.car }),
+								_react2.default.createElement(_Block2.default, { title: 'PERFORMANCE', car: this.state.car })
+							)
 						),
-						_react2.default.createElement(_Gallery2.default, { handleResponse: this.handleResponse, car: this.state.car }),
 						_react2.default.createElement(
-							'div',
-							{ className: 'wrap-block' },
-							_react2.default.createElement(_Block2.default, { title: 'EXTERIOR', car: this.state.car }),
-							_react2.default.createElement(_Block2.default, { title: 'PERFORMANCE', car: this.state.car })
+							_reactResponsive2.default,
+							{ query: '(max-width: 1023px)' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'container-phone' },
+								_react2.default.createElement(_Slider2.default, { car: this.state.car }),
+								_react2.default.createElement(_PhoneDescriptions2.default, { car: this.state.car })
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'call' },
+								'CALL US'
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'phone-blocks' },
+								_react2.default.createElement(_Block2.default, { title: 'EXTERIOR', car: this.state.car }),
+								_react2.default.createElement(_Block2.default, { title: 'PERFORMANCE', car: this.state.car })
+							)
 						)
-					),
-					_react2.default.createElement(
-						_reactResponsive2.default,
-						{ query: '(max-width: 1023px)' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'container-phone' },
-							_react2.default.createElement(_Slider2.default, { car: this.state.car }),
-							_react2.default.createElement(_PhoneDescriptions2.default, { car: this.state.car })
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'call' },
-							'CALL US'
-						),
-						_react2.default.createElement(
-							'div',
-							{ className: 'phone-blocks' },
-							_react2.default.createElement(_Block2.default, { title: 'EXTERIOR', car: this.state.car }),
-							_react2.default.createElement(_Block2.default, { title: 'PERFORMANCE', car: this.state.car })
-						)
-					)
-				);
+					);
+				} else {
+					return null;
+				}
 			}
 		}]);
 	
@@ -42626,6 +42639,5183 @@
 	exports.bootstrapUtils = _bootstrapUtils;
 	exports.createChainedFunction = _createChainedFunction3['default'];
 	exports.ValidComponentChildren = _ValidComponentChildren3['default'];
+
+/***/ },
+/* 438 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(186);
+	
+	var _numbro = __webpack_require__(439);
+	
+	var _numbro2 = _interopRequireDefault(_numbro);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Descriptions = function (_Component) {
+		_inherits(Descriptions, _Component);
+	
+		function Descriptions(props) {
+			_classCallCheck(this, Descriptions);
+	
+			return _possibleConstructorReturn(this, (Descriptions.__proto__ || Object.getPrototypeOf(Descriptions)).call(this, props));
+		}
+	
+		_createClass(Descriptions, [{
+			key: "render",
+			value: function render() {
+				var car = this.props.car;
+				console.log(car);
+				var minPrice = car.min_price;
+				console.log(car.min_price);
+				minPrice = (0, _numbro2.default)(minPrice).formatCurrency('$0,0');
+				var maxPrice = car.max_price;
+				maxPrice = (0, _numbro2.default)(maxPrice).formatCurrency('$0,0');
+				var mileage = car.mileage;
+				mileage = (0, _numbro2.default)(mileage).format('0,0');
+				return _react2.default.createElement(
+					"div",
+					{ className: "description" },
+					_react2.default.createElement(
+						"h4",
+						{ className: "remarked" },
+						car.car_model
+					),
+					_react2.default.createElement(
+						"h4",
+						{ className: "field" },
+						"Year"
+					),
+					_react2.default.createElement(
+						"h4",
+						{ className: "data" },
+						car.year
+					),
+					_react2.default.createElement(
+						"h4",
+						{ className: "field" },
+						"Price Range"
+					),
+					_react2.default.createElement(
+						"h4",
+						{ className: "data" },
+						minPrice,
+						" - ",
+						maxPrice
+					),
+					_react2.default.createElement(
+						"h4",
+						{ className: "field" },
+						"Mileage"
+					),
+					_react2.default.createElement(
+						"h4",
+						{ className: "data" },
+						mileage,
+						" miles"
+					),
+					_react2.default.createElement(
+						"h4",
+						{ className: "field" },
+						"Item Number: ",
+						car.item_number
+					),
+					_react2.default.createElement(
+						"h4",
+						{ className: "field" },
+						"VIN: ",
+						car.vin
+					),
+					_react2.default.createElement(
+						"h4",
+						{ className: "remarked" },
+						"Share this car ",
+						_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "envelope" })
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "stats-wrapper" },
+						_react2.default.createElement(
+							"div",
+							{ className: "stats" },
+							_react2.default.createElement(
+								"h4",
+								null,
+								"Views"
+							),
+							_react2.default.createElement(
+								"h4",
+								{ className: "stats-data" },
+								_react2.default.createElement(
+									"center",
+									null,
+									car.views
+								)
+							)
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "stats" },
+							_react2.default.createElement(
+								"h4",
+								null,
+								"Saves"
+							),
+							_react2.default.createElement(
+								"h4",
+								{ className: "stats-data" },
+								_react2.default.createElement(
+									"center",
+									null,
+									car.saves
+								)
+							)
+						),
+						_react2.default.createElement(
+							"div",
+							{ className: "stats" },
+							_react2.default.createElement(
+								"h4",
+								null,
+								"Shares"
+							),
+							_react2.default.createElement(
+								"h4",
+								{ className: "stats-data" },
+								_react2.default.createElement(
+									"center",
+									null,
+									car.shares
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Descriptions;
+	}(_react.Component);
+	
+	exports.default = Descriptions;
+
+/***/ },
+/* 439 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(process) {/*!
+	 * numbro.js
+	 * version : 1.9.3
+	 * author : Företagsplatsen AB
+	 * license : MIT
+	 * http://www.foretagsplatsen.se
+	 */
+	
+	(function () {
+	    'use strict';
+	
+	    /************************************
+	        Constants
+	    ************************************/
+	
+	    var numbro,
+	        VERSION = '1.9.3',
+	        binarySuffixes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'],
+	        decimalSuffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+	        bytes = {
+	            general: { scale: 1024, suffixes: decimalSuffixes, marker: 'bd' },
+	            binary:  { scale: 1024, suffixes: binarySuffixes, marker: 'b' },
+	            decimal: { scale: 1000, suffixes: decimalSuffixes, marker: 'd' }
+	        },
+	        // general must be before the others because it reuses their characters!
+	        byteFormatOrder = [ bytes.general, bytes.binary, bytes.decimal ],
+	    // internal storage for culture config files
+	        cultures = {},
+	    // Todo: Remove in 2.0.0
+	        languages = cultures,
+	        currentCulture = 'en-US',
+	        zeroFormat = null,
+	        defaultFormat = '0,0',
+	        defaultCurrencyFormat = '0$',
+	        // check for nodeJS
+	        hasModule = (typeof module !== 'undefined' && module.exports),
+	    // default culture
+	        enUS = {
+	            delimiters: {
+	                thousands: ',',
+	                decimal: '.'
+	            },
+	            abbreviations: {
+	                thousand: 'k',
+	                million: 'm',
+	                billion: 'b',
+	                trillion: 't'
+	            },
+	            ordinal: function(number) {
+	                var b = number % 10;
+	                return (~~(number % 100 / 10) === 1) ? 'th' :
+	                    (b === 1) ? 'st' :
+	                        (b === 2) ? 'nd' :
+	                            (b === 3) ? 'rd' : 'th';
+	            },
+	            currency: {
+	                symbol: '$',
+	                position: 'prefix'
+	            },
+	            defaults: {
+	                currencyFormat: ',0000 a'
+	            },
+	            formats: {
+	                fourDigits: '0000 a',
+	                fullWithTwoDecimals: '$ ,0.00',
+	                fullWithTwoDecimalsNoCurrency: ',0.00'
+	            }
+	        };
+	
+	    /************************************
+	        Constructors
+	    ************************************/
+	
+	
+	    // Numbro prototype object
+	    function Numbro(number) {
+	        this._value = number;
+	    }
+	
+	    function zeroes(count) {
+	        var i, ret = '';
+	
+	        for (i = 0; i < count; i++) {
+	            ret += '0';
+	        }
+	
+	        return ret;
+	    }
+	    /**
+	     * Implementation of toFixed() for numbers with exponents
+	     * This function may return negative representations for zero values e.g. "-0.0"
+	     */
+	    function toFixedLargeSmall(value, precision) {
+	        var mantissa,
+	            beforeDec,
+	            afterDec,
+	            exponent,
+	            prefix,
+	            endStr,
+	            zerosStr,
+	            str;
+	
+	        str = value.toString();
+	
+	        mantissa = str.split('e')[0];
+	        exponent = str.split('e')[1];
+	
+	        beforeDec = mantissa.split('.')[0];
+	        afterDec = mantissa.split('.')[1] || '';
+	
+	        if (+exponent > 0) {
+	            // exponent is positive - add zeros after the numbers
+	            str = beforeDec + afterDec + zeroes(exponent - afterDec.length);
+	        } else {
+	            // exponent is negative
+	
+	            if (+beforeDec < 0) {
+	                prefix = '-0';
+	            } else {
+	                prefix = '0';
+	            }
+	
+	            // tack on the decimal point if needed
+	            if (precision > 0) {
+	                prefix += '.';
+	            }
+	
+	            zerosStr = zeroes((-1 * exponent) - 1);
+	            // substring off the end to satisfy the precision
+	            endStr = (zerosStr + Math.abs(beforeDec) + afterDec).substr(0, precision);
+	            str = prefix + endStr;
+	        }
+	
+	        // only add percision 0's if the exponent is positive
+	        if (+exponent > 0 && precision > 0) {
+	            str += '.' + zeroes(precision);
+	        }
+	
+	        return str;
+	    }
+	
+	    /**
+	     * Implementation of toFixed() that treats floats more like decimals
+	     *
+	     * Fixes binary rounding issues (eg. (0.615).toFixed(2) === '0.61') that present
+	     * problems for accounting- and finance-related software.
+	     *
+	     * Also removes negative signs for zero-formatted numbers. e.g. -0.01 w/ precision 1 -> 0.0
+	     */
+	    function toFixed(value, precision, roundingFunction, optionals) {
+	        var power = Math.pow(10, precision),
+	            optionalsRegExp,
+	            output;
+	
+	        if (value.toString().indexOf('e') > -1) {
+	            // toFixed returns scientific notation for numbers above 1e21 and below 1e-7
+	            output = toFixedLargeSmall(value, precision);
+	            // remove the leading negative sign if it exists and should not be present (e.g. -0.00)
+	            if (output.charAt(0) === '-' && +output >= 0) {
+	                output = output.substr(1); // chop off the '-'
+	            }
+	        }
+	        else {
+	            // Multiply up by precision, round accurately, then divide and use native toFixed():
+	            output = (roundingFunction(value + 'e+' + precision) / power).toFixed(precision);
+	        }
+	
+	        if (optionals) {
+	            optionalsRegExp = new RegExp('0{1,' + optionals + '}$');
+	            output = output.replace(optionalsRegExp, '');
+	        }
+	
+	        return output;
+	    }
+	
+	    /************************************
+	        Formatting
+	    ************************************/
+	
+	    // determine what type of formatting we need to do
+	    function formatNumbro(n, format, roundingFunction) {
+	        var output,
+	            escapedFormat = format.replace(/\{[^\{\}]*\}/g, '');
+	
+	        // figure out what kind of format we are dealing with
+	        if (escapedFormat.indexOf('$') > -1) { // currency!!!!!
+	            output = formatCurrency(n, cultures[currentCulture].currency.symbol, format, roundingFunction);
+	        } else if (escapedFormat.indexOf('%') > -1) { // percentage
+	            output = formatPercentage(n, format, roundingFunction);
+	        } else if (escapedFormat.indexOf(':') > -1) { // time
+	            output = formatTime(n, format);
+	        } else { // plain ol' numbers or bytes
+	            output = formatNumber(n._value, format, roundingFunction);
+	        }
+	
+	        // return string
+	        return output;
+	    }
+	
+	    // revert to number
+	    function unformatNumbro(n, string) {
+	        var stringOriginal = string,
+	            thousandRegExp,
+	            millionRegExp,
+	            billionRegExp,
+	            trillionRegExp,
+	            bytesMultiplier = false,
+	            power;
+	
+	        if (string.indexOf(':') > -1) {
+	            n._value = unformatTime(string);
+	        } else {
+	            if (string === zeroFormat) {
+	                n._value = 0;
+	            } else {
+	                if (cultures[currentCulture].delimiters.decimal !== '.') {
+	                    string = string.replace(/\./g, '').replace(cultures[currentCulture].delimiters.decimal, '.');
+	                }
+	
+	                // see if abbreviations are there so that we can multiply to the correct number
+	                thousandRegExp = new RegExp('[^a-zA-Z]' + cultures[currentCulture].abbreviations.thousand +
+	                    '(?:\\)|(\\' + cultures[currentCulture].currency.symbol + ')?(?:\\))?)?$');
+	                millionRegExp = new RegExp('[^a-zA-Z]' + cultures[currentCulture].abbreviations.million +
+	                    '(?:\\)|(\\' + cultures[currentCulture].currency.symbol + ')?(?:\\))?)?$');
+	                billionRegExp = new RegExp('[^a-zA-Z]' + cultures[currentCulture].abbreviations.billion +
+	                    '(?:\\)|(\\' + cultures[currentCulture].currency.symbol + ')?(?:\\))?)?$');
+	                trillionRegExp = new RegExp('[^a-zA-Z]' + cultures[currentCulture].abbreviations.trillion +
+	                    '(?:\\)|(\\' + cultures[currentCulture].currency.symbol + ')?(?:\\))?)?$');
+	
+	                // see if bytes are there so that we can multiply to the correct number
+	                for (power = 1; power < binarySuffixes.length && !bytesMultiplier; ++power) {
+	                    if (string.indexOf(binarySuffixes[power]) > -1) {
+	                        bytesMultiplier = Math.pow(1024, power);
+	                    } else if (string.indexOf(decimalSuffixes[power]) > -1) {
+	                        bytesMultiplier = Math.pow(1000, power);
+	                    }
+	                }
+	
+	                var str = string.replace(/[^0-9\.]+/g, '');
+	                if (str === '') {
+	                    // An empty string is not a number.
+	                    n._value = NaN;
+	
+	                } else {
+	                    // do some math to create our number
+	                    n._value = ((bytesMultiplier) ? bytesMultiplier : 1) *
+	                        ((stringOriginal.match(thousandRegExp)) ? Math.pow(10, 3) : 1) *
+	                        ((stringOriginal.match(millionRegExp)) ? Math.pow(10, 6) : 1) *
+	                        ((stringOriginal.match(billionRegExp)) ? Math.pow(10, 9) : 1) *
+	                        ((stringOriginal.match(trillionRegExp)) ? Math.pow(10, 12) : 1) *
+	                        ((string.indexOf('%') > -1) ? 0.01 : 1) *
+	                        (((string.split('-').length +
+	                            Math.min(string.split('(').length - 1, string.split(')').length - 1)) % 2) ? 1 : -1) *
+	                        Number(str);
+	
+	                    // round if we are talking about bytes
+	                    n._value = (bytesMultiplier) ? Math.ceil(n._value) : n._value;
+	                }
+	            }
+	        }
+	        return n._value;
+	    }
+	
+	    function formatCurrency(n, currencySymbol, originalFormat, roundingFunction) {
+	        var format = originalFormat,
+	            symbolIndex = format.indexOf('$'),
+	            openParenIndex = format.indexOf('('),
+	            plusSignIndex = format.indexOf('+'),
+	            minusSignIndex = format.indexOf('-'),
+	            space = '',
+	            decimalSeparator = '',
+	            spliceIndex,
+	            output;
+	
+	        if(format.indexOf('$') === -1){
+	            // Use defaults instead of the format provided
+	            if (cultures[currentCulture].currency.position === 'infix') {
+	                decimalSeparator = currencySymbol;
+	                if (cultures[currentCulture].currency.spaceSeparated) {
+	                    decimalSeparator = ' ' + decimalSeparator + ' ';
+	                }
+	            } else if (cultures[currentCulture].currency.spaceSeparated) {
+	                space = ' ';
+	            }
+	        } else {
+	            // check for space before or after currency
+	            if (format.indexOf(' $') > -1) {
+	                space = ' ';
+	                format = format.replace(' $', '');
+	            } else if (format.indexOf('$ ') > -1) {
+	                space = ' ';
+	                format = format.replace('$ ', '');
+	            } else {
+	                format = format.replace('$', '');
+	            }
+	        }
+	
+	        // Format The Number
+	        output = formatNumber(n._value, format, roundingFunction, decimalSeparator);
+	
+	        if (originalFormat.indexOf('$') === -1) {
+	            // Use defaults instead of the format provided
+	            switch (cultures[currentCulture].currency.position) {
+	                case 'postfix':
+	                    if (output.indexOf(')') > -1) {
+	                        output = output.split('');
+	                        output.splice(-1, 0, space + currencySymbol);
+	                        output = output.join('');
+	                    } else {
+	                        output = output + space + currencySymbol;
+	                    }
+	                    break;
+	                case 'infix':
+	                    break;
+	                case 'prefix':
+	                    if (output.indexOf('(') > -1 || output.indexOf('-') > -1) {
+	                        output = output.split('');
+	                        spliceIndex = Math.max(openParenIndex, minusSignIndex) + 1;
+	
+	                        output.splice(spliceIndex, 0, currencySymbol + space);
+	                        output = output.join('');
+	                    } else {
+	                        output = currencySymbol + space + output;
+	                    }
+	                    break;
+	                default:
+	                    throw Error('Currency position should be among ["prefix", "infix", "postfix"]');
+	            }
+	        } else {
+	            // position the symbol
+	            if (symbolIndex <= 1) {
+	                if (output.indexOf('(') > -1 || output.indexOf('+') > -1 || output.indexOf('-') > -1) {
+	                    output = output.split('');
+	                    spliceIndex = 1;
+	                    if (symbolIndex < openParenIndex || symbolIndex < plusSignIndex || symbolIndex < minusSignIndex) {
+	                        // the symbol appears before the "(", "+" or "-"
+	                        spliceIndex = 0;
+	                    }
+	                    output.splice(spliceIndex, 0, currencySymbol + space);
+	                    output = output.join('');
+	                } else {
+	                    output = currencySymbol + space + output;
+	                }
+	            } else {
+	                if (output.indexOf(')') > -1) {
+	                    output = output.split('');
+	                    output.splice(-1, 0, space + currencySymbol);
+	                    output = output.join('');
+	                } else {
+	                    output = output + space + currencySymbol;
+	                }
+	            }
+	        }
+	
+	        return output;
+	    }
+	
+	    function formatForeignCurrency(n, foreignCurrencySymbol, originalFormat, roundingFunction) {
+	        return formatCurrency(n, foreignCurrencySymbol, originalFormat, roundingFunction);
+	    }
+	
+	    function formatPercentage(n, format, roundingFunction) {
+	        var space = '',
+	            output,
+	            value = n._value * 100;
+	
+	        // check for space before %
+	        if (format.indexOf(' %') > -1) {
+	            space = ' ';
+	            format = format.replace(' %', '');
+	        } else {
+	            format = format.replace('%', '');
+	        }
+	
+	        output = formatNumber(value, format, roundingFunction);
+	
+	        if (output.indexOf(')') > -1) {
+	            output = output.split('');
+	            output.splice(-1, 0, space + '%');
+	            output = output.join('');
+	        } else {
+	            output = output + space + '%';
+	        }
+	
+	        return output;
+	    }
+	
+	    function formatTime(n) {
+	        var hours = Math.floor(n._value / 60 / 60),
+	            minutes = Math.floor((n._value - (hours * 60 * 60)) / 60),
+	            seconds = Math.round(n._value - (hours * 60 * 60) - (minutes * 60));
+	        return hours + ':' +
+	            ((minutes < 10) ? '0' + minutes : minutes) + ':' +
+	            ((seconds < 10) ? '0' + seconds : seconds);
+	    }
+	
+	    function unformatTime(string) {
+	        var timeArray = string.split(':'),
+	            seconds = 0;
+	        // turn hours and minutes into seconds and add them all up
+	        if (timeArray.length === 3) {
+	            // hours
+	            seconds = seconds + (Number(timeArray[0]) * 60 * 60);
+	            // minutes
+	            seconds = seconds + (Number(timeArray[1]) * 60);
+	            // seconds
+	            seconds = seconds + Number(timeArray[2]);
+	        } else if (timeArray.length === 2) {
+	            // minutes
+	            seconds = seconds + (Number(timeArray[0]) * 60);
+	            // seconds
+	            seconds = seconds + Number(timeArray[1]);
+	        }
+	        return Number(seconds);
+	    }
+	
+	    function formatByteUnits (value, suffixes, scale) {
+	        var suffix = suffixes[0],
+	            power,
+	            min,
+	            max,
+	            abs = Math.abs(value);
+	
+	        if (abs >= scale) {
+	            for (power = 1; power < suffixes.length; ++power) {
+	                min = Math.pow(scale, power);
+	                max = Math.pow(scale, power + 1);
+	
+	                if (abs >= min && abs < max) {
+	                    suffix = suffixes[power];
+	                    value = value / min;
+	                    break;
+	                }
+	            }
+	
+	            // values greater than or equal to [scale] YB never set the suffix
+	            if (suffix === suffixes[0]) {
+	                value = value / Math.pow(scale, suffixes.length - 1);
+	                suffix = suffixes[suffixes.length - 1];
+	            }
+	        }
+	
+	        return { value: value, suffix: suffix };
+	    }
+	
+	    function formatNumber (value, format, roundingFunction, sep) {
+	        var negP = false,
+	            signed = false,
+	            optDec = false,
+	            abbr = '',
+	            abbrK = false, // force abbreviation to thousands
+	            abbrM = false, // force abbreviation to millions
+	            abbrB = false, // force abbreviation to billions
+	            abbrT = false, // force abbreviation to trillions
+	            abbrForce = false, // force abbreviation
+	            bytes = '',
+	            byteFormat,
+	            units,
+	            ord = '',
+	            abs = Math.abs(value),
+	            totalLength,
+	            length,
+	            minimumPrecision,
+	            pow,
+	            w,
+	            intPrecision,
+	            precision,
+	            prefix,
+	            postfix,
+	            thousands,
+	            d = '',
+	            forcedNeg = false,
+	            neg = false,
+	            indexOpenP,
+	            size,
+	            indexMinus,
+	            paren = '',
+	            minlen,
+	            i;
+	
+	        // check if number is zero and a custom zero format has been set
+	        if (value === 0 && zeroFormat !== null) {
+	            return zeroFormat;
+	        }
+	
+	        if (!isFinite(value)) {
+	            return '' + value;
+	        }
+	
+	        if (format.indexOf('{') === 0) {
+	            var end = format.indexOf('}');
+	            if (end === -1) {
+	                throw Error('Format should also contain a "}"');
+	            }
+	            prefix = format.slice(1, end);
+	            format = format.slice(end + 1);
+	        } else {
+	            prefix = '';
+	        }
+	
+	        if (format.indexOf('}') === format.length - 1) {
+	            var start = format.indexOf('{');
+	            if (start === -1) {
+	                throw Error('Format should also contain a "{"');
+	            }
+	            postfix = format.slice(start + 1, -1);
+	            format = format.slice(0, start + 1);
+	        } else {
+	            postfix = '';
+	        }
+	
+	        // check for min length
+	        var info;
+	        if (format.indexOf('.') === -1) {
+	            info = format.match(/([0-9]+).*/);
+	        } else {
+	            info = format.match(/([0-9]+)\..*/);
+	        }
+	        minlen = info === null ? -1 : info[1].length;
+	
+	        // see if we should use parentheses for negative number or if we should prefix with a sign
+	        // if both are present we default to parentheses
+	        if (format.indexOf('-') !== -1) {
+	            forcedNeg = true;
+	        }
+	        if (format.indexOf('(') > -1) {
+	            negP = true;
+	            format = format.slice(1, -1);
+	        } else if (format.indexOf('+') > -1) {
+	            signed = true;
+	            format = format.replace(/\+/g, '');
+	        }
+	
+	        // see if abbreviation is wanted
+	        if (format.indexOf('a') > -1) {
+	            intPrecision = format.split('.')[0].match(/[0-9]+/g) || ['0'];
+	            intPrecision = parseInt(intPrecision[0], 10);
+	
+	            // check if abbreviation is specified
+	            abbrK = format.indexOf('aK') >= 0;
+	            abbrM = format.indexOf('aM') >= 0;
+	            abbrB = format.indexOf('aB') >= 0;
+	            abbrT = format.indexOf('aT') >= 0;
+	            abbrForce = abbrK || abbrM || abbrB || abbrT;
+	
+	            // check for space before abbreviation
+	            if (format.indexOf(' a') > -1) {
+	                abbr = ' ';
+	                format = format.replace(' a', '');
+	            } else {
+	                format = format.replace('a', '');
+	            }
+	
+	            totalLength = Math.floor(Math.log(abs) / Math.LN10) + 1;
+	
+	            minimumPrecision = totalLength % 3;
+	            minimumPrecision = minimumPrecision === 0 ? 3 : minimumPrecision;
+	
+	            if (intPrecision && abs !== 0) {
+	
+	                length = Math.floor(Math.log(abs) / Math.LN10) + 1 - intPrecision;
+	
+	                pow = 3 * ~~((Math.min(intPrecision, totalLength) - minimumPrecision) / 3);
+	
+	                abs = abs / Math.pow(10, pow);
+	
+	                if (format.indexOf('.') === -1 && intPrecision > 3) {
+	                    format += '[.]';
+	
+	                    size = length === 0 ? 0 : 3 * ~~(length / 3) - length;
+	                    size = size < 0 ? size + 3 : size;
+	
+	                    format += zeroes(size);
+	                }
+	            }
+	
+	            if (Math.floor(Math.log(Math.abs(value)) / Math.LN10) + 1 !== intPrecision) {
+	                if (abs >= Math.pow(10, 12) && !abbrForce || abbrT) {
+	                    // trillion
+	                    abbr = abbr + cultures[currentCulture].abbreviations.trillion;
+	                    value = value / Math.pow(10, 12);
+	                } else if (abs < Math.pow(10, 12) && abs >= Math.pow(10, 9) && !abbrForce || abbrB) {
+	                    // billion
+	                    abbr = abbr + cultures[currentCulture].abbreviations.billion;
+	                    value = value / Math.pow(10, 9);
+	                } else if (abs < Math.pow(10, 9) && abs >= Math.pow(10, 6) && !abbrForce || abbrM) {
+	                    // million
+	                    abbr = abbr + cultures[currentCulture].abbreviations.million;
+	                    value = value / Math.pow(10, 6);
+	                } else if (abs < Math.pow(10, 6) && abs >= Math.pow(10, 3) && !abbrForce || abbrK) {
+	                    // thousand
+	                    abbr = abbr + cultures[currentCulture].abbreviations.thousand;
+	                    value = value / Math.pow(10, 3);
+	                }
+	            }
+	        }
+	
+	        // see if we are formatting
+	        //   binary-decimal bytes (1024 MB), binary bytes (1024 MiB), or decimal bytes (1000 MB)
+	        for (i = 0; i < byteFormatOrder.length; ++i) {
+	            byteFormat = byteFormatOrder[i];
+	
+	            if (format.indexOf(byteFormat.marker) > -1) {
+	                // check for space before
+	                if (format.indexOf(' ' + byteFormat.marker) >-1) {
+	                    bytes = ' ';
+	                }
+	
+	                // remove the marker (with the space if it had one)
+	                format = format.replace(bytes + byteFormat.marker, '');
+	
+	                units = formatByteUnits(value, byteFormat.suffixes, byteFormat.scale);
+	
+	                value = units.value;
+	                bytes = bytes + units.suffix;
+	
+	                break;
+	            }
+	        }
+	
+	        // see if ordinal is wanted
+	        if (format.indexOf('o') > -1) {
+	            // check for space before
+	            if (format.indexOf(' o') > -1) {
+	                ord = ' ';
+	                format = format.replace(' o', '');
+	            } else {
+	                format = format.replace('o', '');
+	            }
+	
+	            if (cultures[currentCulture].ordinal) {
+	                ord = ord + cultures[currentCulture].ordinal(value);
+	            }
+	        }
+	
+	        if (format.indexOf('[.]') > -1) {
+	            optDec = true;
+	            format = format.replace('[.]', '.');
+	        }
+	
+	        w = value.toString().split('.')[0];
+	        precision = format.split('.')[1];
+	        thousands = format.indexOf(',');
+	
+	        if (precision) {
+	            if (precision.indexOf('*') !== -1) {
+	                d = toFixed(value, value.toString().split('.')[1].length, roundingFunction);
+	            } else {
+	                if (precision.indexOf('[') > -1) {
+	                    precision = precision.replace(']', '');
+	                    precision = precision.split('[');
+	                    d = toFixed(value, (precision[0].length + precision[1].length), roundingFunction,
+	                        precision[1].length);
+	                } else {
+	                    d = toFixed(value, precision.length, roundingFunction);
+	                }
+	            }
+	
+	            w = d.split('.')[0];
+	
+	            if (d.split('.')[1].length) {
+	                var p = sep ? abbr + sep : cultures[currentCulture].delimiters.decimal;
+	                d = p + d.split('.')[1];
+	            } else {
+	                d = '';
+	            }
+	
+	            if (optDec && Number(d.slice(1)) === 0) {
+	                d = '';
+	            }
+	        } else {
+	            w = toFixed(value, 0, roundingFunction);
+	        }
+	
+	        // format number
+	        if (w.indexOf('-') > -1) {
+	            w = w.slice(1);
+	            neg = true;
+	        }
+	
+	        if (w.length < minlen) {
+	            w = zeroes(minlen - w.length) + w;
+	        }
+	
+	        if (thousands > -1) {
+	            w = w.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1' +
+	                cultures[currentCulture].delimiters.thousands);
+	        }
+	
+	        if (format.indexOf('.') === 0) {
+	            w = '';
+	        }
+	
+	        indexOpenP = format.indexOf('(');
+	        indexMinus = format.indexOf('-');
+	
+	        if (indexOpenP < indexMinus) {
+	            paren = ((negP && neg) ? '(' : '') + (((forcedNeg && neg) || (!negP && neg)) ? '-' : '');
+	        } else {
+	            paren = (((forcedNeg && neg) || (!negP && neg)) ? '-' : '') + ((negP && neg) ? '(' : '');
+	        }
+	
+	        return prefix +
+	            paren + ((!neg && signed && value !== 0) ? '+' : '') +
+	            w + d +
+	            ((ord) ? ord : '') +
+	            ((abbr && !sep) ? abbr : '') +
+	            ((bytes) ? bytes : '') +
+	            ((negP && neg) ? ')' : '') +
+	            postfix;
+	    }
+	
+	    /************************************
+	        Top Level Functions
+	    ************************************/
+	
+	    numbro = function(input) {
+	        if (numbro.isNumbro(input)) {
+	            input = input.value();
+	        } else if (input === 0 || typeof input === 'undefined') {
+	            input = 0;
+	        } else if (!Number(input)) {
+	            input = numbro.fn.unformat(input);
+	        }
+	
+	        return new Numbro(Number(input));
+	    };
+	
+	    // version number
+	    numbro.version = VERSION;
+	
+	    // compare numbro object
+	    numbro.isNumbro = function(obj) {
+	        return obj instanceof Numbro;
+	    };
+	
+	    /**
+	     * This function allow the user to set a new language with a fallback if
+	     * the language does not exist. If no fallback language is provided,
+	     * it fallbacks to english.
+	     *
+	     * @deprecated Since in version 1.6.0. It will be deleted in version 2.0
+	     * `setCulture` should be used instead.
+	     */
+	    numbro.setLanguage = function(newLanguage, fallbackLanguage) {
+	        console.warn('`setLanguage` is deprecated since version 1.6.0. Use `setCulture` instead');
+	        var key = newLanguage,
+	            prefix = newLanguage.split('-')[0],
+	            matchingLanguage = null;
+	        if (!languages[key]) {
+	            Object.keys(languages).forEach(function(language) {
+	                if (!matchingLanguage && language.split('-')[0] === prefix) {
+	                    matchingLanguage = language;
+	                }
+	            });
+	            key = matchingLanguage || fallbackLanguage || 'en-US';
+	        }
+	        chooseCulture(key);
+	    };
+	
+	    /**
+	     * This function allow the user to set a new culture with a fallback if
+	     * the culture does not exist. If no fallback culture is provided,
+	     * it falls back to "en-US".
+	     */
+	    numbro.setCulture = function(newCulture, fallbackCulture) {
+	        var key = newCulture,
+	            suffix = newCulture.split('-')[1],
+	            matchingCulture = null;
+	        if (!cultures[key]) {
+	            if (suffix) {
+	                Object.keys(cultures).forEach(function(language) {
+	                    if (!matchingCulture && language.split('-')[1] === suffix) {
+	                        matchingCulture = language;
+	                    }
+	                });
+	            }
+	
+	            key = matchingCulture || fallbackCulture || 'en-US';
+	        }
+	        chooseCulture(key);
+	    };
+	
+	    /**
+	     * This function will load languages and then set the global language.  If
+	     * no arguments are passed in, it will simply return the current global
+	     * language key.
+	     *
+	     * @deprecated Since in version 1.6.0. It will be deleted in version 2.0
+	     * `culture` should be used instead.
+	     */
+	    numbro.language = function(key, values) {
+	        console.warn('`language` is deprecated since version 1.6.0. Use `culture` instead');
+	
+	        if (!key) {
+	            return currentCulture;
+	        }
+	
+	        if (key && !values) {
+	            if (!languages[key]) {
+	                throw new Error('Unknown language : ' + key);
+	            }
+	            chooseCulture(key);
+	        }
+	
+	        if (values || !languages[key]) {
+	            setCulture(key, values);
+	        }
+	
+	        return numbro;
+	    };
+	
+	    /**
+	     * This function will load cultures and then set the global culture.  If
+	     * no arguments are passed in, it will simply return the current global
+	     * culture code.
+	     */
+	    numbro.culture = function(code, values) {
+	        if (!code) {
+	            return currentCulture;
+	        }
+	
+	        if (code && !values) {
+	            if (!cultures[code]) {
+	                throw new Error('Unknown culture : ' + code);
+	            }
+	            chooseCulture(code);
+	        }
+	
+	        if (values || !cultures[code]) {
+	            setCulture(code, values);
+	        }
+	
+	        return numbro;
+	    };
+	
+	    /**
+	     * This function provides access to the loaded language data.  If
+	     * no arguments are passed in, it will simply return the current
+	     * global language object.
+	     *
+	     * @deprecated Since in version 1.6.0. It will be deleted in version 2.0
+	     * `culture` should be used instead.
+	     */
+	    numbro.languageData = function(key) {
+	        console.warn('`languageData` is deprecated since version 1.6.0. Use `cultureData` instead');
+	
+	        if (!key) {
+	            return languages[currentCulture];
+	        }
+	
+	        if (!languages[key]) {
+	            throw new Error('Unknown language : ' + key);
+	        }
+	
+	        return languages[key];
+	    };
+	
+	    /**
+	     * This function provides access to the loaded culture data.  If
+	     * no arguments are passed in, it will simply return the current
+	     * global culture object.
+	     */
+	    numbro.cultureData = function(code) {
+	        if (!code) {
+	            return cultures[currentCulture];
+	        }
+	
+	        if (!cultures[code]) {
+	            throw new Error('Unknown culture : ' + code);
+	        }
+	
+	        return cultures[code];
+	    };
+	
+	    numbro.culture('en-US', enUS);
+	
+	    /**
+	     * @deprecated Since in version 1.6.0. It will be deleted in version 2.0
+	     * `cultures` should be used instead.
+	     */
+	    numbro.languages = function() {
+	        console.warn('`languages` is deprecated since version 1.6.0. Use `cultures` instead');
+	
+	        return languages;
+	    };
+	
+	    numbro.cultures = function() {
+	        return cultures;
+	    };
+	
+	    numbro.zeroFormat = function(format) {
+	        zeroFormat = typeof(format) === 'string' ? format : null;
+	    };
+	
+	    numbro.defaultFormat = function(format) {
+	        defaultFormat = typeof(format) === 'string' ? format : '0.0';
+	    };
+	
+	    numbro.defaultCurrencyFormat = function (format) {
+	        defaultCurrencyFormat = typeof(format) === 'string' ? format : '0$';
+	    };
+	
+	    numbro.validate = function(val, culture) {
+	
+	        var _decimalSep,
+	            _thousandSep,
+	            _currSymbol,
+	            _valArray,
+	            _abbrObj,
+	            _thousandRegEx,
+	            cultureData,
+	            temp;
+	
+	        //coerce val to string
+	        if (typeof val !== 'string') {
+	            val += '';
+	            if (console.warn) {
+	                console.warn('Numbro.js: Value is not string. It has been co-erced to: ', val);
+	            }
+	        }
+	
+	        //trim whitespaces from either sides
+	        val = val.trim();
+	
+	        //replace the initial '+' or '-' sign if present
+	        val = val.replace(/^[+-]?/, '');
+	
+	        //if val is just digits return true
+	        if ( !! val.match(/^\d+$/)) {
+	            return true;
+	        }
+	
+	        //if val is empty return false
+	        if (val === '') {
+	            return false;
+	        }
+	
+	        //get the decimal and thousands separator from numbro.cultureData
+	        try {
+	            //check if the culture is understood by numbro. if not, default it to current culture
+	            cultureData = numbro.cultureData(culture);
+	        } catch (e) {
+	            cultureData = numbro.cultureData(numbro.culture());
+	        }
+	
+	        //setup the delimiters and currency symbol based on culture
+	        _currSymbol = cultureData.currency.symbol;
+	        _abbrObj = cultureData.abbreviations;
+	        _decimalSep = cultureData.delimiters.decimal;
+	        if (cultureData.delimiters.thousands === '.') {
+	            _thousandSep = '\\.';
+	        } else {
+	            _thousandSep = cultureData.delimiters.thousands;
+	        }
+	
+	        // validating currency symbol
+	        temp = val.match(/^[^\d\.\,]+/);
+	        if (temp !== null) {
+	            val = val.substr(1);
+	            if (temp[0] !== _currSymbol) {
+	                return false;
+	            }
+	        }
+	
+	        //validating abbreviation symbol
+	        temp = val.match(/[^\d]+$/);
+	        if (temp !== null) {
+	            val = val.slice(0, -1);
+	            if (temp[0] !== _abbrObj.thousand && temp[0] !== _abbrObj.million &&
+	                    temp[0] !== _abbrObj.billion && temp[0] !== _abbrObj.trillion) {
+	                return false;
+	            }
+	        }
+	
+	        _thousandRegEx = new RegExp(_thousandSep + '{2}');
+	
+	        if (!val.match(/[^\d.,]/g)) {
+	            _valArray = val.split(_decimalSep);
+	            if (_valArray.length > 2) {
+	                return false;
+	            } else {
+	                if (_valArray.length < 2) {
+	                    return ( !! _valArray[0].match(/^\d+.*\d$/) && !_valArray[0].match(_thousandRegEx));
+	                } else {
+	                    if (_valArray[0] === '') {
+	                        // for values without leading zero eg. .984
+	                        return (!_valArray[0].match(_thousandRegEx) &&
+	                            !!_valArray[1].match(/^\d+$/));
+	
+	                    } else if (_valArray[0].length === 1) {
+	                        return ( !! _valArray[0].match(/^\d+$/) &&
+	                            !_valArray[0].match(_thousandRegEx) &&
+	                            !! _valArray[1].match(/^\d+$/));
+	                    } else {
+	                        return ( !! _valArray[0].match(/^\d+.*\d$/) &&
+	                            !_valArray[0].match(_thousandRegEx) &&
+	                            !! _valArray[1].match(/^\d+$/));
+	                    }
+	                }
+	            }
+	        }
+	
+	        return false;
+	    };
+	
+	    /**
+	     * * @deprecated Since in version 1.6.0. It will be deleted in version 2.0
+	     * `loadCulturesInNode` should be used instead.
+	     */
+	    numbro.loadLanguagesInNode = function() {
+	        console.warn('`loadLanguagesInNode` is deprecated since version 1.6.0. Use `loadCulturesInNode` instead');
+	
+	        numbro.loadCulturesInNode();
+	    };
+	
+	    numbro.loadCulturesInNode = function() {
+	        // TODO: Rename the folder in 2.0.0
+	        var cultures = __webpack_require__(440);
+	
+	        for(var langLocaleCode in cultures) {
+	            if(langLocaleCode) {
+	                numbro.culture(langLocaleCode, cultures[langLocaleCode]);
+	            }
+	        }
+	    };
+	
+	    /************************************
+	        Helpers
+	    ************************************/
+	
+	    function setCulture(code, values) {
+	        cultures[code] = values;
+	    }
+	
+	    function chooseCulture(code) {
+	        currentCulture = code;
+	        var defaults = cultures[code].defaults;
+	        if (defaults && defaults.format) {
+	            numbro.defaultFormat(defaults.format);
+	        }
+	        if (defaults && defaults.currencyFormat) {
+	            numbro.defaultCurrencyFormat(defaults.currencyFormat);
+	        }
+	    }
+	
+	    function inNodejsRuntime() {
+	        return (typeof process !== 'undefined') &&
+	            (process.browser === undefined) &&
+	            process.title &&
+	            (
+	                process.title.indexOf('node') === 0 ||
+	                process.title.indexOf('meteor-tool') > 0 ||
+	                process.title === 'grunt' ||
+	                process.title === 'gulp'
+	            ) &&
+	            ("function" !== 'undefined');
+	    }
+	
+	    /************************************
+	        Floating-point helpers
+	    ************************************/
+	
+	    // The floating-point helper functions and implementation
+	    // borrows heavily from sinful.js: http://guipn.github.io/sinful.js/
+	
+	    /**
+	     * Array.prototype.reduce for browsers that don't support it
+	     * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce#Compatibility
+	     */
+	    if ('function' !== typeof Array.prototype.reduce) {
+	        Array.prototype.reduce = function(callback, optInitialValue) {
+	
+	            if (null === this || 'undefined' === typeof this) {
+	                // At the moment all modern browsers, that support strict mode, have
+	                // native implementation of Array.prototype.reduce. For instance, IE8
+	                // does not support strict mode, so this check is actually useless.
+	                throw new TypeError('Array.prototype.reduce called on null or undefined');
+	            }
+	
+	            if ('function' !== typeof callback) {
+	                throw new TypeError(callback + ' is not a function');
+	            }
+	
+	            var index,
+	                value,
+	                length = this.length >>> 0,
+	                isValueSet = false;
+	
+	            if (1 < arguments.length) {
+	                value = optInitialValue;
+	                isValueSet = true;
+	            }
+	
+	            for (index = 0; length > index; ++index) {
+	                if (this.hasOwnProperty(index)) {
+	                    if (isValueSet) {
+	                        value = callback(value, this[index], index, this);
+	                    } else {
+	                        value = this[index];
+	                        isValueSet = true;
+	                    }
+	                }
+	            }
+	
+	            if (!isValueSet) {
+	                throw new TypeError('Reduce of empty array with no initial value');
+	            }
+	
+	            return value;
+	        };
+	    }
+	
+	
+	    /**
+	     * Computes the multiplier necessary to make x >= 1,
+	     * effectively eliminating miscalculations caused by
+	     * finite precision.
+	     */
+	    function multiplier(x) {
+	        var parts = x.toString().split('.');
+	        if (parts.length < 2) {
+	            return 1;
+	        }
+	        return Math.pow(10, parts[1].length);
+	    }
+	
+	    /**
+	     * Given a variable number of arguments, returns the maximum
+	     * multiplier that must be used to normalize an operation involving
+	     * all of them.
+	     */
+	    function correctionFactor() {
+	        var args = Array.prototype.slice.call(arguments);
+	        return args.reduce(function(prev, next) {
+	            var mp = multiplier(prev),
+	                mn = multiplier(next);
+	            return mp > mn ? mp : mn;
+	        }, -Infinity);
+	    }
+	
+	    /************************************
+	        Numbro Prototype
+	    ************************************/
+	
+	
+	    numbro.fn = Numbro.prototype = {
+	
+	        clone: function() {
+	            return numbro(this);
+	        },
+	
+	        format: function(inputString, roundingFunction) {
+	            return formatNumbro(this,
+	                inputString ? inputString : defaultFormat,
+	                (roundingFunction !== undefined) ? roundingFunction : Math.round
+	            );
+	        },
+	
+	        formatCurrency: function(inputString, roundingFunction) {
+	            return formatCurrency(this,
+	                cultures[currentCulture].currency.symbol,
+	                inputString ? inputString : defaultCurrencyFormat,
+	                (roundingFunction !== undefined) ? roundingFunction : Math.round
+	            );
+	        },
+	
+	        formatForeignCurrency: function(currencySymbol, inputString, roundingFunction) {
+	            return formatForeignCurrency(this,
+	                currencySymbol,
+	                inputString ? inputString : defaultCurrencyFormat,
+	                (roundingFunction !== undefined) ? roundingFunction : Math.round
+	            );
+	        },
+	
+	        unformat: function(inputString) {
+	            if (typeof inputString === 'number') {
+	                return inputString;
+	            } else if (typeof inputString === 'string') {
+	                var result = unformatNumbro(this, inputString);
+	
+	                // Any unparseable string (represented as NaN in the result) is
+	                // converted into undefined.
+	                return isNaN(result) ? undefined : result;
+	            } else {
+	                return undefined;
+	            }
+	        },
+	
+	        binaryByteUnits: function() {
+	            return formatByteUnits(this._value, bytes.binary.suffixes, bytes.binary.scale).suffix;
+	        },
+	
+	        byteUnits: function() {
+	            return formatByteUnits(this._value, bytes.general.suffixes, bytes.general.scale).suffix;
+	        },
+	
+	        decimalByteUnits: function() {
+	            return formatByteUnits(this._value, bytes.decimal.suffixes, bytes.decimal.scale).suffix;
+	        },
+	
+	        value: function() {
+	            return this._value;
+	        },
+	
+	        valueOf: function() {
+	            return this._value;
+	        },
+	
+	        set: function(value) {
+	            this._value = Number(value);
+	            return this;
+	        },
+	
+	        add: function(value) {
+	            var corrFactor = correctionFactor.call(null, this._value, value);
+	
+	            function cback(accum, curr) {
+	                return accum + corrFactor * curr;
+	            }
+	            this._value = [this._value, value].reduce(cback, 0) / corrFactor;
+	            return this;
+	        },
+	
+	        subtract: function(value) {
+	            var corrFactor = correctionFactor.call(null, this._value, value);
+	
+	            function cback(accum, curr) {
+	                return accum - corrFactor * curr;
+	            }
+	            this._value = [value].reduce(cback, this._value * corrFactor) / corrFactor;
+	            return this;
+	        },
+	
+	        multiply: function(value) {
+	            function cback(accum, curr) {
+	                var corrFactor = correctionFactor(accum, curr),
+	                    result = accum * corrFactor;
+	                result *= curr * corrFactor;
+	                result /= corrFactor * corrFactor;
+	                return result;
+	            }
+	            this._value = [this._value, value].reduce(cback, 1);
+	            return this;
+	        },
+	
+	        divide: function(value) {
+	            function cback(accum, curr) {
+	                var corrFactor = correctionFactor(accum, curr);
+	                return (accum * corrFactor) / (curr * corrFactor);
+	            }
+	            this._value = [this._value, value].reduce(cback);
+	            return this;
+	        },
+	
+	        difference: function(value) {
+	            return Math.abs(numbro(this._value).subtract(value).value());
+	        }
+	
+	    };
+	
+	    /************************************
+	        Exposing Numbro
+	    ************************************/
+	
+	    if (inNodejsRuntime()) {
+	        //Todo: Rename the folder in 2.0.0
+	        numbro.loadCulturesInNode();
+	    }
+	
+	    // CommonJS module is defined
+	    if (hasModule) {
+	        module.exports = numbro;
+	    } else {
+	        /*global ender:false */
+	        if (typeof ender === 'undefined') {
+	            // here, `this` means `window` in the browser, or `global` on the server
+	            // add `numbro` as a global object via a string identifier,
+	            // for Closure Compiler 'advanced' mode
+	            this.numbro = numbro;
+	        }
+	
+	        /*global define:false */
+	        if (true) {
+	            !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	                return numbro;
+	            }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	        }
+	    }
+	
+	}.call(typeof window === 'undefined' ? this : window));
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ },
+/* 440 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports['cs-CZ'] = __webpack_require__(441);
+	exports['da-DK'] = __webpack_require__(442);
+	exports['de-CH'] = __webpack_require__(443);
+	exports['de-DE'] = __webpack_require__(444);
+	exports['en-AU'] = __webpack_require__(445);
+	exports['en-GB'] = __webpack_require__(446);
+	exports['en-NZ'] = __webpack_require__(447);
+	exports['en-ZA'] = __webpack_require__(448);
+	exports['es-AR'] = __webpack_require__(449);
+	exports['es-ES'] = __webpack_require__(450);
+	exports['et-EE'] = __webpack_require__(451);
+	exports['fa-IR'] = __webpack_require__(452);
+	exports['fi-FI'] = __webpack_require__(453);
+	exports['fil-PH'] = __webpack_require__(454);
+	exports['fr-CA'] = __webpack_require__(455);
+	exports['fr-CH'] = __webpack_require__(456);
+	exports['fr-FR'] = __webpack_require__(457);
+	exports['he-IL'] = __webpack_require__(458);
+	exports['hu-HU'] = __webpack_require__(459);
+	exports['it-IT'] = __webpack_require__(460);
+	exports['ja-JP'] = __webpack_require__(461);
+	exports['ko-KR'] = __webpack_require__(462);
+	exports['lv-LV'] = __webpack_require__(463);
+	exports['nb-NO'] = __webpack_require__(464);
+	exports['nl-BE'] = __webpack_require__(465);
+	exports['nl-NL'] = __webpack_require__(466);
+	exports['pl-PL'] = __webpack_require__(467);
+	exports['pt-BR'] = __webpack_require__(468);
+	exports['pt-PT'] = __webpack_require__(469);
+	exports['ru-RU'] = __webpack_require__(470);
+	exports['ru-UA'] = __webpack_require__(471);
+	exports['sk-SK'] = __webpack_require__(472);
+	exports['sv-SE'] = __webpack_require__(473);
+	exports['th-TH'] = __webpack_require__(474);
+	exports['tr-TR'] = __webpack_require__(475);
+	exports['uk-UA'] = __webpack_require__(476);
+	exports['zh-CN'] = __webpack_require__(477);
+	exports['zh-TW'] = __webpack_require__(478);
+
+/***/ },
+/* 441 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Czech
+	 * locale: Czech Republic
+	 * author : Anatoli Papirovski : https://github.com/apapirovski
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'cs-CZ',
+	        cultureCode: 'cs-CZ',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'tis.',
+	            million: 'mil.',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: 'Kč',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 442 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Danish
+	 * locale: Denmark
+	 * author : Michael Storgaard : https://github.com/mstorgaard
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'da-DK',
+	        cultureCode: 'da-DK',
+	        delimiters: {
+	            thousands: '.',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'mio',
+	            billion: 'mia',
+	            trillion: 'b'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: 'kr',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 443 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : German
+	 * locale: Switzerland
+	 * author : Michael Piefel : https://github.com/piefel (based on work from Marco Krage : https://github.com/sinky)
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'de-CH',
+	        cultureCode: 'de-CH',
+	        delimiters: {
+	            thousands: '\'',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: 'CHF',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 444 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : German
+	 * locale: Germany
+	 * author : Marco Krage : https://github.com/sinky
+	 *
+	 * Generally useful in Germany, Austria, Luxembourg, Belgium
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'de-DE',
+	        cultureCode: 'de-DE',
+	        delimiters: {
+	            thousands: '.',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: '€',
+	            position: 'postfix',
+	            spaceSeparated: true
+	        },
+	        defaults: {
+	            currencyFormat: ',4'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 445 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : English
+	 * locale: Australia
+	 * author : Benedikt Huss : https://github.com/ben305
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'en-AU',
+	        cultureCode: 'en-AU',
+	        delimiters: {
+	            thousands: ',',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function (number) {
+	            var b = number % 10;
+	            return (~~ (number % 100 / 10) === 1) ? 'th' :
+	                (b === 1) ? 'st' :
+	                (b === 2) ? 'nd' :
+	                (b === 3) ? 'rd' : 'th';
+	        },
+	        currency: {
+	            symbol: '$',
+	            position: 'prefix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: '$ ,0.00',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: '$ ,0'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 446 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : English
+	 * locale: United Kingdom of Great Britain and Northern Ireland
+	 * author : Dan Ristic : https://github.com/dristic
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'en-GB',
+	        cultureCode: 'en-GB',
+	        delimiters: {
+	            thousands: ',',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function (number) {
+	            var b = number % 10;
+	            return (~~ (number % 100 / 10) === 1) ? 'th' :
+	                (b === 1) ? 'st' :
+	                (b === 2) ? 'nd' :
+	                (b === 3) ? 'rd' : 'th';
+	        },
+	        currency: {
+	            symbol: '£',
+	            position: 'prefix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: '$ ,0.00',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: '$ ,0'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 447 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : English
+	 * locale: New Zealand
+	 * author : Benedikt Huss : https://github.com/ben305
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'en-NZ',
+	        cultureCode: 'en-NZ',
+	        delimiters: {
+	            thousands: ',',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function (number) {
+	            var b = number % 10;
+	            return (~~ (number % 100 / 10) === 1) ? 'th' :
+	                (b === 1) ? 'st' :
+	                (b === 2) ? 'nd' :
+	                (b === 3) ? 'rd' : 'th';
+	        },
+	        currency: {
+	            symbol: '$',
+	            position: 'prefix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: '$ ,0.00',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: '$ ,0'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 448 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : English
+	 * locale: South Africa
+	 * author : Stewart Scott https://github.com/stewart42
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'en-ZA',
+	        cultureCode: 'en-ZA',
+	        delimiters: {
+	            thousands: ',',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function (number) {
+	            var b = number % 10;
+	            return (~~ (number % 100 / 10) === 1) ? 'th' :
+	                (b === 1) ? 'st' :
+	                (b === 2) ? 'nd' :
+	                (b === 3) ? 'rd' : 'th';
+	        },
+	        currency: {
+	            symbol: 'R',
+	            position: 'prefix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: '$ ,0.00',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: '$ ,0'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 449 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Spanish
+	 * locale: Argentina
+	 * author : Hernan Garcia : https://github.com/hgarcia
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'es-AR',
+	        cultureCode: 'es-AR',
+	        delimiters: {
+	            thousands: '.',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'mm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function (number) {
+	            var b = number % 10;
+	            return (b === 1 || b === 3) ? 'er' :
+	                (b === 2) ? 'do' :
+	                (b === 7 || b === 0) ? 'mo' :
+	        (b === 8) ? 'vo' :
+	        (b === 9) ? 'no' : 'to';
+	        },
+	        currency: {
+	            symbol: '$',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 450 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Spanish
+	 * locale: Spain
+	 * author : Hernan Garcia : https://github.com/hgarcia
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'es-ES',
+	        cultureCode: 'es-ES',
+	        delimiters: {
+	            thousands: '.',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'mm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function (number) {
+	            var b = number % 10;
+	            return (b === 1 || b === 3) ? 'er' :
+	                (b === 2) ? 'do' :
+	                    (b === 7 || b === 0) ? 'mo' :
+	                        (b === 8) ? 'vo' :
+	                            (b === 9) ? 'no' : 'to';
+	        },
+	        currency: {
+	            symbol: '€',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 451 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Estonian
+	 * locale: Estonia
+	 * author : Illimar Tambek : https://github.com/ragulka
+	 *
+	 * Note: in Estonian, abbreviations are always separated
+	 * from numbers with a space
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'et-EE',
+	        cultureCode: 'et-EE',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: ' tuh',
+	            million: ' mln',
+	            billion: ' mld',
+	            trillion: ' trl'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: '€',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 452 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Farsi
+	 * locale: Iran
+	 * author : neo13 : https://github.com/neo13
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'fa-IR',
+	        cultureCode: 'fa-IR',
+	        delimiters: {
+	            thousands: '،',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: 'هزار',
+	            million: 'میلیون',
+	            billion: 'میلیارد',
+	            trillion: 'تریلیون'
+	        },
+	        ordinal: function () {
+	            return 'ام';
+	        },
+	        currency: {
+	            symbol: '﷼'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 453 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Finnish
+	 * locale: Finland
+	 * author : Sami Saada : https://github.com/samitheberber
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'fi-FI',
+	        cultureCode: 'fi-FI',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'M',
+	            billion: 'G',
+	            trillion: 'T'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: '€',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 454 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Filipino (Pilipino)
+	 * locale: Philippines
+	 * author : Michael Abadilla : https://github.com/mjmaix
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'fil-PH',
+	        cultureCode: 'fil-PH',
+	        delimiters: {
+	            thousands: ',',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function (number) {
+	            var b = number % 10;
+	            return (~~ (number % 100 / 10) === 1) ? 'th' :
+	                (b === 1) ? 'st' :
+	                (b === 2) ? 'nd' :
+	                (b === 3) ? 'rd' : 'th';
+	        },
+	        currency: {
+	            symbol: '₱'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 455 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : French
+	 * locale: Canada
+	 * author : Léo Renaud-Allaire : https://github.com/renaudleo
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'fr-CA',
+	        cultureCode: 'fr-CA',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'M',
+	            billion: 'G',
+	            trillion: 'T'
+	        },
+	        ordinal : function (number) {
+	            return number === 1 ? 'er' : 'ème';
+	        },
+	        currency: {
+	            symbol: '$',
+	            position: 'postfix',
+	            spaceSeparated : true
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: '$ ,0.00',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: '$ ,0'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 456 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : French
+	 * locale: Switzerland
+	 * author : Adam Draper : https://github.com/adamwdraper
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'fr-CH',
+	        cultureCode: 'fr-CH',
+	        delimiters: {
+	            thousands: '\'',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal : function (number) {
+	            return number === 1 ? 'er' : 'ème';
+	        },
+	        currency: {
+	            symbol: 'CHF',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 457 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : French
+	 * locale: France
+	 * author : Adam Draper : https://github.com/adamwdraper
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'fr-FR',
+	        cultureCode: 'fr-FR',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal : function (number) {
+	            return number === 1 ? 'er' : 'ème';
+	        },
+	        currency: {
+	            symbol: '€',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 458 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Hebrew
+	 * locale : IL
+	 * author : Eli Zehavi : https://github.com/eli-zehavi
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'he-IL',
+	        cultureCode: 'he-IL',
+	        delimiters: {
+	            thousands: ',',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: 'אלף',
+	            million: 'מליון',
+	            billion: 'בליון',
+	            trillion: 'טריליון'
+	        },
+	        currency: {
+	            symbol: '₪',
+	            position: 'prefix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: '₪ ,0.00',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: '₪ ,0'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+	
+
+
+/***/ },
+/* 459 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Hungarian
+	 * locale: Hungary
+	 * author : Peter Bakondy : https://github.com/pbakondy
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'hu-HU',
+	        cultureCode: 'hu-HU',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'E',  // ezer
+	            million: 'M',   // millió
+	            billion: 'Mrd', // milliárd
+	            trillion: 'T'   // trillió
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: ' Ft',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 460 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Italian
+	 * locale: Italy
+	 * author : Giacomo Trombi : http://cinquepunti.it
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'it-IT',
+	        cultureCode: 'it-IT',
+	        delimiters: {
+	            thousands: '.',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'mila',
+	            million: 'mil',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function () {
+	            return 'º';
+	        },
+	        currency: {
+	            symbol: '€',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 461 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Japanese
+	 * locale: Japan
+	 * author : teppeis : https://github.com/teppeis
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'ja-JP',
+	        cultureCode: 'ja-JP',
+	        delimiters: {
+	            thousands: ',',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: '千',
+	            million: '百万',
+	            billion: '十億',
+	            trillion: '兆'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: '¥',
+	            position: 'prefix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: '$ ,0.00',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: '$ ,0'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 462 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Korean
+	 * author (numbro.js Version): Randy Wilander : https://github.com/rocketedaway
+	 * author (numeral.js Version) : Rich Daley : https://github.com/pedantic-git
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'ko-KR',
+	        cultureCode: 'ko-KR',
+	        delimiters: {
+	            thousands: ',',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: '천',
+	            million: '백만',
+	            billion: '십억',
+	            trillion: '일조'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: '₩'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 463 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Latvian
+	 * locale: Latvia
+	 * author : Lauris Bukšis-Haberkorns : https://github.com/Lafriks
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'lv-LV',
+	        cultureCode: 'lv-LV',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: ' tūkst.',
+	            million: ' milj.',
+	            billion: ' mljrd.',
+	            trillion: ' trilj.'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: '€',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 464 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language: Norwegian Bokmål
+	 * locale: Norway
+	 * author : Benjamin Van Ryseghem
+	 */
+	(function() {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'nb-NO',
+	        cultureCode: 'nb-NO',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 't',
+	            million: 'M',
+	            billion: 'md',
+	            trillion: 't'
+	        },
+	        currency: {
+	            symbol: 'kr',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 465 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Dutch
+	 * locale: Belgium
+	 * author : Dieter Luypaert : https://github.com/moeriki
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'nl-BE',
+	        cultureCode: 'nl-BE',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal  : ','
+	        },
+	        abbreviations: {
+	            thousand : 'k',
+	            million  : 'mln',
+	            billion  : 'mld',
+	            trillion : 'bln'
+	        },
+	        ordinal : function (number) {
+	            var remainder = number % 100;
+	            return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
+	        },
+	        currency: {
+	            symbol: '€',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 466 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Dutch
+	 * locale: Netherlands
+	 * author : Dave Clayton : https://github.com/davedx
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'nl-NL',
+	        cultureCode: 'nl-NL',
+	        delimiters: {
+	            thousands: '.',
+	            decimal  : ','
+	        },
+	        abbreviations: {
+	            thousand : 'k',
+	            million  : 'mln',
+	            billion  : 'mrd',
+	            trillion : 'bln'
+	        },
+	        ordinal : function (number) {
+	            var remainder = number % 100;
+	            return (number !== 0 && remainder <= 1 || remainder === 8 || remainder >= 20) ? 'ste' : 'de';
+	        },
+	        currency: {
+	            symbol: '€',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 467 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Polish
+	 * locale : Poland
+	 * author : Dominik Bulaj : https://github.com/dominikbulaj
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'pl-PL',
+	        cultureCode: 'pl-PL',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'tys.',
+	            million: 'mln',
+	            billion: 'mld',
+	            trillion: 'bln'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: ' zł',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 468 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Portuguese
+	 * locale : Brazil
+	 * author : Ramiro Varandas Jr : https://github.com/ramirovjr
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'pt-BR',
+	        cultureCode: 'pt-BR',
+	        delimiters: {
+	            thousands: '.',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'mil',
+	            million: 'milhões',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function () {
+	            return 'º';
+	        },
+	        currency: {
+	            symbol: 'R$',
+	            position: 'prefix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 469 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Portuguese
+	 * locale : Portugal
+	 * author : Diogo Resende : https://github.com/dresende
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'pt-PT',
+	        cultureCode: 'pt-PT',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'k',
+	            million: 'm',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal : function () {
+	            return 'º';
+	        },
+	        currency: {
+	            symbol: '€',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 470 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Russian
+	 * locale : Russsia
+	 * author : Anatoli Papirovski : https://github.com/apapirovski
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'ru-RU',
+	        cultureCode: 'ru-RU',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'тыс.',
+	            million: 'млн',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function () {
+	            // not ideal, but since in Russian it can taken on
+	            // different forms (masculine, feminine, neuter)
+	            // this is all we can do
+	            return '.';
+	        },
+	        currency: {
+	            symbol: 'руб.',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 471 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Russian
+	 * locale : Ukraine
+	 * author : Anatoli Papirovski : https://github.com/apapirovski
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'ru-UA',
+	        cultureCode: 'ru-UA',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'тыс.',
+	            million: 'млн',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function () {
+	            // not ideal, but since in Russian it can taken on
+	            // different forms (masculine, feminine, neuter)
+	            // this is all we can do
+	            return '.';
+	        },
+	        currency: {
+	            symbol: '\u20B4',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 472 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Slovak
+	 * locale : Slovakia
+	 * author : Ahmed Al Hafoudh : http://www.freevision.sk
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'sk-SK',
+	        cultureCode: 'sk-SK',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'tis.',
+	            million: 'mil.',
+	            billion: 'b',
+	            trillion: 't'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: '€',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 473 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Swedish
+	 * locale : Sweden
+	 * author : Benjamin Van Ryseghem (benjamin.vanryseghem.com)
+	 */
+	(function() {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'sv-SE',
+	        cultureCode: 'sv-SE',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 't',
+	            million: 'M',
+	            billion: 'md',
+	            trillion: 'tmd'
+	        },
+	        currency: {
+	            symbol: 'kr',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 474 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Thai
+	 * locale : Thailand
+	 * author : Sathit Jittanupat : https://github.com/jojosati
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'th-TH',
+	        cultureCode: 'th-TH',
+	        delimiters: {
+	            thousands: ',',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: 'พัน',
+	            million: 'ล้าน',
+	            billion: 'พันล้าน',
+	            trillion: 'ล้านล้าน'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: '฿',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 475 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Turkish
+	 * locale : Turkey
+	 * author : Ecmel Ercan : https://github.com/ecmel,
+	 *          Erhan Gundogan : https://github.com/erhangundogan,
+	 *          Burak Yiğit Kaya: https://github.com/BYK
+	 */
+	(function() {
+	    'use strict';
+	
+	    var suffixes = {
+	            1: '\'inci',
+	            5: '\'inci',
+	            8: '\'inci',
+	            70: '\'inci',
+	            80: '\'inci',
+	
+	            2: '\'nci',
+	            7: '\'nci',
+	            20: '\'nci',
+	            50: '\'nci',
+	
+	            3: '\'üncü',
+	            4: '\'üncü',
+	            100: '\'üncü',
+	
+	            6: '\'ncı',
+	
+	            9: '\'uncu',
+	            10: '\'uncu',
+	            30: '\'uncu',
+	
+	            60: '\'ıncı',
+	            90: '\'ıncı'
+	        },
+	        language = {
+	            langLocaleCode: 'tr-TR',
+	            cultureCode: 'tr-TR',
+	            delimiters: {
+	                thousands: '.',
+	                decimal: ','
+	            },
+	            abbreviations: {
+	                thousand: 'bin',
+	                million: 'milyon',
+	                billion: 'milyar',
+	                trillion: 'trilyon'
+	            },
+	            ordinal: function(number) {
+	                if (number === 0) {  // special case for zero
+	                    return '\'ıncı';
+	                }
+	
+	                var a = number % 10,
+	                    b = number % 100 - a,
+	                    c = number >= 100 ? 100 : null;
+	
+	                return suffixes[a] || suffixes[b] || suffixes[c];
+	            },
+	            currency: {
+	                symbol: '\u20BA',
+	                position: 'postfix'
+	            },
+	            defaults: {
+	                currencyFormat: ',4 a'
+	            },
+	            formats: {
+	                fourDigits: '4 a',
+	                fullWithTwoDecimals: ',0.00 $',
+	                fullWithTwoDecimalsNoCurrency: ',0.00',
+	                fullWithNoDecimals: ',0 $'
+	            }
+	        };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 476 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Ukrainian
+	 * locale : Ukraine
+	 * author : Michael Piefel : https://github.com/piefel (with help from Tetyana Kuzmenko)
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'uk-UA',
+	        cultureCode: 'uk-UA',
+	        delimiters: {
+	            thousands: ' ',
+	            decimal: ','
+	        },
+	        abbreviations: {
+	            thousand: 'тис.',
+	            million: 'млн',
+	            billion: 'млрд',
+	            trillion: 'блн'
+	        },
+	        ordinal: function () {
+	            // not ideal, but since in Ukrainian it can taken on
+	            // different forms (masculine, feminine, neuter)
+	            // this is all we can do
+	            return '';
+	        },
+	        currency: {
+	            symbol: '\u20B4',
+	            position: 'postfix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: ',0.00 $',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: ',0 $'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 477 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : simplified chinese
+	 * locale : China
+	 * author : badplum : https://github.com/badplum
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'zh-CN',
+	        cultureCode: 'zh-CN',
+	        delimiters: {
+	            thousands: ',',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: '千',
+	            million: '百万',
+	            billion: '十亿',
+	            trillion: '兆'
+	        },
+	        ordinal: function () {
+	            return '.';
+	        },
+	        currency: {
+	            symbol: '¥',
+	            position: 'prefix'
+	        },
+	        defaults: {
+	            currencyFormat: ',4 a'
+	        },
+	        formats: {
+	            fourDigits: '4 a',
+	            fullWithTwoDecimals: '$ ,0.00',
+	            fullWithTwoDecimalsNoCurrency: ',0.00',
+	            fullWithNoDecimals: '$ ,0'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 478 */
+/***/ function(module, exports) {
+
+	/*!
+	 * numbro.js language configuration
+	 * language : Chinese (Taiwan)
+	 * author (numbro.js Version): Randy Wilander : https://github.com/rocketedaway
+	 * author (numeral.js Version) : Rich Daley : https://github.com/pedantic-git
+	 */
+	(function () {
+	    'use strict';
+	
+	    var language = {
+	        langLocaleCode: 'zh-TW',
+	        cultureCode: 'zh-TW',
+	        delimiters: {
+	            thousands: ',',
+	            decimal: '.'
+	        },
+	        abbreviations: {
+	            thousand: '千',
+	            million: '百萬',
+	            billion: '十億',
+	            trillion: '兆'
+	        },
+	        ordinal: function () {
+	            return '第';
+	        },
+	        currency: {
+	            symbol: 'NT$'
+	        }
+	    };
+	
+	    // CommonJS
+	    if (typeof module !== 'undefined' && module.exports) {
+	        module.exports = language;
+	    }
+	    // Browser
+	    if (typeof window !== 'undefined' && window.numbro && window.numbro.culture) {
+	        window.numbro.culture(language.cultureCode, language);
+	    }
+	}.call(typeof window === 'undefined' ? this : window));
+
+
+/***/ },
+/* 479 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactBootstrap = __webpack_require__(186);
+	
+	var _numbro = __webpack_require__(439);
+	
+	var _numbro2 = _interopRequireDefault(_numbro);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PhoneDescriptions = function (_Component) {
+		_inherits(PhoneDescriptions, _Component);
+	
+		function PhoneDescriptions(props) {
+			_classCallCheck(this, PhoneDescriptions);
+	
+			return _possibleConstructorReturn(this, (PhoneDescriptions.__proto__ || Object.getPrototypeOf(PhoneDescriptions)).call(this, props));
+		}
+	
+		_createClass(PhoneDescriptions, [{
+			key: "render",
+			value: function render() {
+				var car = this.props.car;
+				var minPrice = car.min_price;
+				minPrice = (0, _numbro2.default)(minPrice).formatCurrency('$0,0');
+				var maxPrice = car.max_price;
+				maxPrice = (0, _numbro2.default)(maxPrice).formatCurrency('$0,0');
+				var mileage = car.mileage;
+				mileage = (0, _numbro2.default)(mileage).format('0,0');
+				return _react2.default.createElement(
+					"div",
+					{ className: "wrapper" },
+					_react2.default.createElement(
+						"div",
+						{ className: "description-left" },
+						_react2.default.createElement(
+							"h4",
+							{ className: "car-model" },
+							car.car_model
+						),
+						_react2.default.createElement(
+							"h4",
+							{ className: "field" },
+							"Year"
+						),
+						_react2.default.createElement(
+							"h4",
+							{ className: "data" },
+							car.year
+						),
+						_react2.default.createElement(
+							"h4",
+							{ className: "field" },
+							"Price Range"
+						),
+						_react2.default.createElement(
+							"h4",
+							{ className: "data" },
+							minPrice,
+							" - ",
+							maxPrice
+						),
+						_react2.default.createElement(
+							"h4",
+							{ className: "field" },
+							"Mileage"
+						),
+						_react2.default.createElement(
+							"h4",
+							{ className: "data" },
+							mileage,
+							" miles"
+						)
+					),
+					_react2.default.createElement(
+						"div",
+						{ className: "description-right" },
+						_react2.default.createElement(
+							"h4",
+							{ className: "field" },
+							"Item Number: ",
+							car.item_number
+						),
+						_react2.default.createElement(
+							"h4",
+							{ className: "field" },
+							"VIN: ",
+							car.vin
+						),
+						_react2.default.createElement(
+							"h4",
+							{ className: "remarked" },
+							"Share this car ",
+							_react2.default.createElement(_reactBootstrap.Glyphicon, { glyph: "envelope" })
+						),
+						_react2.default.createElement(
+							"h4",
+							{ className: "field" },
+							"Views"
+						),
+						_react2.default.createElement(
+							"h4",
+							{ className: "stats-data" },
+							car.views
+						)
+					)
+				);
+			}
+		}]);
+	
+		return PhoneDescriptions;
+	}(_react.Component);
+	
+	exports.default = PhoneDescriptions;
+
+/***/ },
+/* 480 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(158);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _reactResponsiveCarousel = __webpack_require__(481);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Slider = function (_Component) {
+	    _inherits(Slider, _Component);
+	
+	    function Slider(props) {
+	        _classCallCheck(this, Slider);
+	
+	        return _possibleConstructorReturn(this, (Slider.__proto__ || Object.getPrototypeOf(Slider)).call(this, props));
+	    }
+	
+	    _createClass(Slider, [{
+	        key: 'render',
+	        value: function render() {
+	            var car = this.props.car;
+	            return _react2.default.createElement(
+	                _reactResponsiveCarousel.Carousel,
+	                { showThumbs: false, showArrows: false, showStatus: false },
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement('img', { src: car.photos[0] })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement('img', { src: car.photos[1] })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement('img', { src: car.photos[2] })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement('img', { src: car.photos[3] })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement('img', { src: car.photos[4] })
+	                ),
+	                _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement('img', { src: car.photos[5] })
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Slider;
+	}(_react.Component);
+	
+	exports.default = Slider;
+
+/***/ },
+/* 481 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	module.exports = {
+	    Carousel: __webpack_require__(482),
+	    Thumbs: __webpack_require__(489)
+	};
+
+/***/ },
+/* 482 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(158);
+	var klass = __webpack_require__(483);
+	var merge = __webpack_require__(484);
+	var CSSTranslate = __webpack_require__(485);
+	var Swipe = __webpack_require__(487);
+	var Thumbs = __webpack_require__(489);
+	
+	// react-swipe was compiled using babel
+	Swipe = Swipe.default;
+	
+	module.exports = React.createClass({
+	    displayName: 'Slider',
+	    propTypes: {
+	        children: React.PropTypes.node.isRequired,
+	        showArrows: React.PropTypes.bool,
+	        showStatus: React.PropTypes.bool,
+	        showIndicators: React.PropTypes.bool,
+	        infiniteLoop: React.PropTypes.bool,
+	        showThumbs: React.PropTypes.bool,
+	        selectedItem: React.PropTypes.number,
+	        onClickItem: React.PropTypes.func,
+	        onClickThumb: React.PropTypes.func,
+	        onChange: React.PropTypes.func,
+	        axis: React.PropTypes.oneOf(['horizontal', 'vertical']),
+	        width: React.PropTypes.string,
+	        useKeyboardArrows: React.PropTypes.bool,
+	        autoPlay: React.PropTypes.bool,
+	        stopOnHover: React.PropTypes.bool,
+	        interval: React.PropTypes.number,
+	        swipeScrollTolerance: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string])
+	    },
+	
+	    getDefaultProps: function getDefaultProps() {
+	        return {
+	            showIndicators: true,
+	            showArrows: true,
+	            showStatus: true,
+	            showThumbs: true,
+	            infiniteLoop: false,
+	            selectedItem: 0,
+	            axis: 'horizontal',
+	            useKeyboardArrows: false,
+	            autoPlay: false,
+	            stopOnHover: true,
+	            interval: 3000,
+	            swipeScrollTolerance: 5
+	        };
+	    },
+	    getInitialState: function getInitialState() {
+	        return {
+	            // index of the image to be shown.
+	            selectedItem: this.props.selectedItem,
+	            hasMount: false
+	        };
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(props) {
+	        if (props.selectedItem !== this.state.selectedItem) {
+	            this.updateSizes();
+	            this.setState({
+	                selectedItem: props.selectedItem
+	            });
+	        }
+	    },
+	    componentDidMount: function componentDidMount(nextProps) {
+	        this.bindEvents();
+	        this.setupAutoPlay();
+	
+	        var images = ReactDOM.findDOMNode(this.item0).getElementsByTagName('img');
+	        var initialImage = images && images[this.props.selectedItem];
+	
+	        if (initialImage) {
+	            // if it's a carousel of images, we set the mount state after the first image is loaded
+	            initialImage.addEventListener('load', this.setMountState);
+	        } else {
+	            this.setMountState();
+	        }
+	    },
+	    componentWillUnmount: function componentWillUnmount() {
+	        this.unbindEvents();
+	        this.destroyAutoPlay();
+	    },
+	    setupAutoPlay: function setupAutoPlay() {
+	        if (this.props.autoPlay) {
+	            this.autoPlay();
+	
+	            if (this.props.stopOnHover) {
+	                var carouselWrapper = ReactDOM.findDOMNode(this.carouselWrapper);
+	                carouselWrapper.addEventListener('mouseenter', this.stopOnHover);
+	                carouselWrapper.addEventListener('mouseleave', this.autoPlay);
+	            }
+	        }
+	    },
+	    destroyAutoPlay: function destroyAutoPlay() {
+	        if (this.props.autoPlay) {
+	            this.clearAutoPlay();
+	
+	            if (this.props.stopOnHover) {
+	                var carouselWrapper = ReactDOM.findDOMNode(this.carouselWrapper);
+	                carouselWrapper.removeEventListener('mousemove', this.stopOnHover);
+	                carouselWrapper.removeEventListener('mouseleave', this.autoPlay);
+	            }
+	        }
+	    },
+	    autoPlay: function autoPlay() {
+	        var _this = this;
+	
+	        this.timer = setTimeout(function () {
+	            _this.increment();
+	            _this.autoPlay();
+	        }, this.props.interval);
+	    },
+	    clearAutoPlay: function clearAutoPlay() {
+	        clearTimeout(this.timer);
+	    },
+	    stopOnHover: function stopOnHover() {
+	        this.clearAutoPlay();
+	    },
+	    bindEvents: function bindEvents() {
+	        // as the widths are calculated, we need to resize
+	        // the carousel when the window is resized
+	        window.addEventListener("resize", this.updateSizes);
+	        // issue #2 - image loading smaller
+	        window.addEventListener("DOMContentLoaded", this.updateSizes);
+	
+	        if (this.props.useKeyboardArrows) {
+	            document.addEventListener("keydown", this.navigateWithKeyboard);
+	        }
+	    },
+	    unbindEvents: function unbindEvents() {
+	        // removing listeners
+	        window.removeEventListener("resize", this.updateSizes);
+	        window.removeEventListener("DOMContentLoaded", this.updateSizes);
+	
+	        if (this.props.useKeyboardArrows) {
+	            document.removeEventListener("keydown", this.navigateWithKeyboard);
+	        }
+	    },
+	    navigateWithKeyboard: function navigateWithKeyboard(e) {
+	        var nextKeys = ['ArrowDown', 'ArrowRight'];
+	        var prevKeys = ['ArrowUp', 'ArrowLeft'];
+	        var allowedKeys = nextKeys.concat(prevKeys);
+	
+	        if (allowedKeys.indexOf(e.key) > -1) {
+	            if (nextKeys.indexOf(e.key) > -1) {
+	                this.increment();
+	            } else if (prevKeys.indexOf(e.key) > -1) {
+	                this.decrement();
+	            }
+	        }
+	    },
+	    updateSizes: function updateSizes() {
+	        var isHorizontal = this.props.axis === 'horizontal';
+	        var firstItem = ReactDOM.findDOMNode(this.item0);
+	        var itemSize = isHorizontal ? firstItem.clientWidth : firstItem.clientHeight;
+	
+	        this.setState({
+	            itemSize: itemSize,
+	            wrapperSize: isHorizontal ? itemSize * this.props.children.length : itemSize
+	        });
+	    },
+	    setMountState: function setMountState() {
+	        this.setState({ hasMount: true });
+	        this.updateSizes();
+	    },
+	    handleClickItem: function handleClickItem(index, item) {
+	        var handler = this.props.onClickItem;
+	
+	        if (typeof handler === 'function') {
+	            handler(index, item);
+	        }
+	
+	        if (index !== this.state.selectedItem) {
+	            this.setState({
+	                selectedItem: index
+	            });
+	        }
+	    },
+	    handleOnChange: function handleOnChange(index, item) {
+	        var handler = this.props.onChange;
+	
+	        if (typeof handler === 'function') {
+	            handler(index, item);
+	        }
+	    },
+	    handleClickThumb: function handleClickThumb(index, item) {
+	        var handler = this.props.onClickThumb;
+	
+	        if (typeof handler === 'function') {
+	            handler(index, item);
+	        }
+	
+	        this.selectItem({
+	            selectedItem: index
+	        });
+	    },
+	    onSwipeStart: function onSwipeStart() {
+	        this.setState({
+	            swiping: true
+	        });
+	    },
+	    onSwipeEnd: function onSwipeEnd() {
+	        this.setState({
+	            swiping: false
+	        });
+	    },
+	    onSwipeMove: function onSwipeMove(delta) {
+	        var _this2 = this;
+	
+	        var list = ReactDOM.findDOMNode(this.itemList);
+	        var isHorizontal = this.props.axis === 'horizontal';
+	
+	        var initialBoundry = 0;
+	
+	        var currentPosition = -this.state.selectedItem * 100;
+	        var finalBoundry = -(this.props.children.length - 1) * 100;
+	
+	        var axisDelta = isHorizontal ? delta.x : delta.y;
+	        var handledDelta = axisDelta;
+	
+	        // prevent user from swiping left out of boundaries
+	        if (currentPosition === initialBoundry && axisDelta > 0) {
+	            handledDelta = 0;
+	        }
+	
+	        // prevent user from swiping right out of boundaries
+	        if (currentPosition === finalBoundry && axisDelta < 0) {
+	            handledDelta = 0;
+	        }
+	
+	        var position = currentPosition + 100 / (this.state.wrapperSize / handledDelta) + '%';
+	
+	        ['WebkitTransform', 'MozTransform', 'MsTransform', 'OTransform', 'transform', 'msTransform'].forEach(function (prop) {
+	            list.style[prop] = CSSTranslate(position, _this2.props.axis);
+	        });
+	
+	        // allows scroll if the swipe was within the tolerance
+	        return Math.abs(axisDelta) > this.props.swipeScrollTolerance;
+	    },
+	    decrement: function decrement(positions) {
+	        this.moveTo(this.state.selectedItem - (typeof positions === 'Number' ? positions : 1));
+	    },
+	    increment: function increment(positions) {
+	        this.moveTo(this.state.selectedItem + (typeof positions === 'Number' ? positions : 1));
+	    },
+	    moveTo: function moveTo(position) {
+	        var lastPosition = this.props.children.length - 1;
+	
+	        if (position < 0) {
+	            position = this.props.infiniteLoop ? lastPosition : 0;
+	        }
+	
+	        if (position > lastPosition) {
+	            position = this.props.infiniteLoop ? 0 : lastPosition;
+	        }
+	
+	        this.selectItem({
+	            // if it's not a slider, we don't need to set position here
+	            selectedItem: position
+	        });
+	    },
+	    changeItem: function changeItem(e) {
+	        var newIndex = e.target.value;
+	
+	        this.selectItem({
+	            selectedItem: newIndex
+	        });
+	    },
+	    selectItem: function selectItem(state) {
+	        this.setState(state);
+	        this.handleOnChange(state.selectedItem, this.props.children[state.selectedItem]);
+	    },
+	    renderItems: function renderItems() {
+	        var _this3 = this;
+	
+	        return React.Children.map(this.props.children, function (item, index) {
+	            var hasMount = _this3.state.hasMount;
+	            var itemClass = klass.ITEM(true, index === _this3.state.selectedItem);
+	
+	            return React.createElement(
+	                'li',
+	                { ref: function ref(node) {
+	                        return _this3["item" + index] = node;
+	                    }, key: "itemKey" + index, className: itemClass,
+	                    onClick: _this3.handleClickItem.bind(_this3, index, item) },
+	                item
+	            );
+	        });
+	    },
+	    renderControls: function renderControls() {
+	        var _this4 = this;
+	
+	        if (!this.props.showIndicators) {
+	            return null;
+	        }
+	
+	        return React.createElement(
+	            'ul',
+	            { className: 'control-dots' },
+	            React.Children.map(this.props.children, function (item, index) {
+	                return React.createElement('li', { className: klass.DOT(index === _this4.state.selectedItem), onClick: _this4.changeItem, value: index, key: index });
+	            })
+	        );
+	    },
+	    renderStatus: function renderStatus() {
+	        if (!this.props.showStatus) {
+	            return null;
+	        }
+	
+	        return React.createElement(
+	            'p',
+	            { className: 'carousel-status' },
+	            this.state.selectedItem + 1,
+	            ' of ',
+	            this.props.children.length
+	        );
+	    },
+	    renderThumbs: function renderThumbs() {
+	        if (!this.props.showThumbs) {
+	            return null;
+	        }
+	
+	        return React.createElement(
+	            Thumbs,
+	            { onSelectItem: this.handleClickThumb, selectedItem: this.state.selectedItem },
+	            this.props.children
+	        );
+	    },
+	    render: function render() {
+	        var _this5 = this;
+	
+	        var itemsLength = this.props.children.length;
+	
+	        if (itemsLength === 0) {
+	            return null;
+	        }
+	
+	        var isHorizontal = this.props.axis === 'horizontal';
+	
+	        var canShowArrows = this.props.showArrows && itemsLength > 1;
+	
+	        // show left arrow?
+	        var hasPrev = canShowArrows && this.state.selectedItem > 0 || this.props.infiniteLoop;
+	        // show right arrow
+	        var hasNext = canShowArrows && this.state.selectedItem < itemsLength - 1 || this.props.infiniteLoop;
+	        // obj to hold the transformations and styles
+	        var itemListStyles = {};
+	
+	        var currentPosition = -this.state.selectedItem * 100 + '%';
+	
+	        // if 3d is available, let's take advantage of the performance of transform
+	        var transformProp = CSSTranslate(currentPosition, this.props.axis);
+	
+	        itemListStyles = {
+	            'WebkitTransform': transformProp,
+	            'MozTransform': transformProp,
+	            'MsTransform': transformProp,
+	            'OTransform': transformProp,
+	            'transform': transformProp,
+	            'msTransform': transformProp
+	        };
+	
+	        var swiperProps = {
+	            selectedItem: this.state.selectedItem,
+	            className: klass.SLIDER(true, this.state.swiping),
+	            onSwipeMove: this.onSwipeMove,
+	            onSwipeStart: this.onSwipeStart,
+	            onSwipeEnd: this.onSwipeEnd,
+	            style: itemListStyles,
+	            ref: function ref(node) {
+	                return _this5.itemList = node;
+	            }
+	        };
+	
+	        var containerStyles = {};
+	
+	        if (isHorizontal) {
+	            merge(swiperProps, {
+	                onSwipeLeft: this.increment,
+	                onSwipeRight: this.decrement
+	            });
+	        } else {
+	            merge(swiperProps, {
+	                onSwipeUp: this.decrement,
+	                onSwipeDown: this.increment
+	            });
+	
+	            swiperProps.style.height = this.state.itemSize;
+	            containerStyles.height = this.state.itemSize;
+	        }
+	
+	        return React.createElement(
+	            'div',
+	            { className: this.props.className, ref: function ref(node) {
+	                    return _this5.carouselWrapper = node;
+	                } },
+	            React.createElement(
+	                'div',
+	                { className: klass.CAROUSEL(true), style: { width: this.props.width || '100%' } },
+	                React.createElement('button', { type: 'button', className: klass.ARROW_PREV(!hasPrev), onClick: this.decrement }),
+	                React.createElement(
+	                    'div',
+	                    { className: klass.WRAPPER(true, this.props.axis), style: containerStyles, ref: function ref(node) {
+	                            return _this5.itemsWrapper = node;
+	                        } },
+	                    React.createElement(
+	                        Swipe,
+	                        _extends({ tagName: 'ul' }, swiperProps),
+	                        this.renderItems()
+	                    )
+	                ),
+	                React.createElement('button', { type: 'button', className: klass.ARROW_NEXT(!hasNext), onClick: this.increment }),
+	                this.renderControls(),
+	                this.renderStatus()
+	            ),
+	            this.renderThumbs()
+	        );
+	    }
+	});
+
+/***/ },
+/* 483 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var classNames = __webpack_require__(273);
+	
+	module.exports = {
+	    CAROUSEL: function CAROUSEL(isSlider) {
+	        return classNames({
+	            "carousel": true,
+	            "carousel-slider": isSlider
+	        });
+	    },
+	    WRAPPER: function WRAPPER(isSlider, axis) {
+	        return classNames({
+	            "thumbs-wrapper": !isSlider,
+	            "slider-wrapper": isSlider,
+	            "axis-horizontal": axis === "horizontal",
+	            "axis-vertical": axis !== "horizontal"
+	        });
+	    },
+	    SLIDER: function SLIDER(isSlider, isSwiping) {
+	        return classNames({
+	            "thumbs": !isSlider,
+	            "slider": isSlider,
+	            "animated": !isSwiping
+	        });
+	    },
+	    ITEM: function ITEM(isSlider, selected) {
+	        return classNames({
+	            "thumb": !isSlider,
+	            "slide": isSlider,
+	            "selected": selected
+	        });
+	    },
+	    ARROW_PREV: function ARROW_PREV(disabled) {
+	        return classNames({
+	            "control-arrow control-prev": true,
+	            "control-disabled": disabled
+	        });
+	    },
+	    ARROW_NEXT: function ARROW_NEXT(disabled) {
+	        return classNames({
+	            "control-arrow control-next": true,
+	            "control-disabled": disabled
+	        });
+	    },
+	    DOT: function DOT(selected) {
+	        return classNames({
+	            "dot": true,
+	            'selected': selected
+	        });
+	    }
+	};
+
+/***/ },
+/* 484 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = function (target) {
+	  if (target === undefined || target === null) {
+	    throw new TypeError('Cannot convert undefined or null to object');
+	  }
+	
+	  var output = Object(target);
+	  for (var index = 1; index < arguments.length; index++) {
+	    var source = arguments[index];
+	    if (source !== undefined && source !== null) {
+	      for (var nextKey in source) {
+	        if (source.hasOwnProperty(nextKey)) {
+	          output[nextKey] = source[nextKey];
+	        }
+	      }
+	    }
+	  }
+	  return output;
+	};
+
+/***/ },
+/* 485 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var has3d = __webpack_require__(486);
+	
+	module.exports = function (position, axis) {
+	    var _has3d = has3d();
+	    var positionCss = axis === 'horizontal' ? [position, 0] : [0, position];
+	    var transitionProp = _has3d ? 'translate3d' : 'translate';
+	
+	    if (_has3d) {
+	        // adds z position
+	        positionCss.push(0);
+	    }
+	
+	    var translatedPosition = '(' + positionCss.join(',') + ')';
+	
+	    return transitionProp + translatedPosition;
+	};
+
+/***/ },
+/* 486 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = function has3d() {
+	    if (typeof window === 'undefined' || !window.getComputedStyle) {
+	        return false;
+	    }
+	
+	    var el = document.createElement('p'),
+	        has3d,
+	        transforms = {
+	        'webkitTransform': '-webkit-transform',
+	        'OTransform': '-o-transform',
+	        'msTransform': '-ms-transform',
+	        'MozTransform': '-moz-transform',
+	        'transform': 'transform'
+	    };
+	
+	    // Add it to the body to get the computed style.
+	    document.body.insertBefore(el, null);
+	
+	    for (var t in transforms) {
+	        if (el.style[t] !== undefined) {
+	            el.style[t] = "translate3d(1px,1px,1px)";
+	            has3d = window.getComputedStyle(el).getPropertyValue(transforms[t]);
+	        }
+	    }
+	
+	    document.body.removeChild(el);
+	
+	    return has3d !== undefined && has3d.length > 0 && has3d !== "none";
+	};
+
+/***/ },
+/* 487 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(488)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  } else if (typeof exports !== "undefined") {
+	    factory(exports, require('./react-swipe'));
+	  } else {
+	    var mod = {
+	      exports: {}
+	    };
+	    factory(mod.exports, global.reactSwipe);
+	    global.index = mod.exports;
+	  }
+	})(this, function (exports, _reactSwipe) {
+	  'use strict';
+	
+	  Object.defineProperty(exports, "__esModule", {
+	    value: true
+	  });
+	
+	  var _reactSwipe2 = _interopRequireDefault(_reactSwipe);
+	
+	  function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : {
+	      default: obj
+	    };
+	  }
+	
+	  exports.default = _reactSwipe2.default;
+	});
+
+/***/ },
+/* 488 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function (global, factory) {
+	  if (true) {
+	    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports, __webpack_require__(1)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	  } else if (typeof exports !== "undefined") {
+	    factory(exports, require('react'));
+	  } else {
+	    var mod = {
+	      exports: {}
+	    };
+	    factory(mod.exports, global.react);
+	    global.reactSwipe = mod.exports;
+	  }
+	})(this, function (exports, _react) {
+	  'use strict';
+	
+	  Object.defineProperty(exports, "__esModule", {
+	    value: true
+	  });
+	
+	  var _react2 = _interopRequireDefault(_react);
+	
+	  function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : {
+	      default: obj
+	    };
+	  }
+	
+	  function _classCallCheck(instance, Constructor) {
+	    if (!(instance instanceof Constructor)) {
+	      throw new TypeError("Cannot call a class as a function");
+	    }
+	  }
+	
+	  var _createClass = function () {
+	    function defineProperties(target, props) {
+	      for (var i = 0; i < props.length; i++) {
+	        var descriptor = props[i];
+	        descriptor.enumerable = descriptor.enumerable || false;
+	        descriptor.configurable = true;
+	        if ("value" in descriptor) descriptor.writable = true;
+	        Object.defineProperty(target, descriptor.key, descriptor);
+	      }
+	    }
+	
+	    return function (Constructor, protoProps, staticProps) {
+	      if (protoProps) defineProperties(Constructor.prototype, protoProps);
+	      if (staticProps) defineProperties(Constructor, staticProps);
+	      return Constructor;
+	    };
+	  }();
+	
+	  function _possibleConstructorReturn(self, call) {
+	    if (!self) {
+	      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+	    }
+	
+	    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+	  }
+	
+	  function _inherits(subClass, superClass) {
+	    if (typeof superClass !== "function" && superClass !== null) {
+	      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+	    }
+	
+	    subClass.prototype = Object.create(superClass && superClass.prototype, {
+	      constructor: {
+	        value: subClass,
+	        enumerable: false,
+	        writable: true,
+	        configurable: true
+	      }
+	    });
+	    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+	  }
+	
+	  var ReactSwipe = function (_Component) {
+	    _inherits(ReactSwipe, _Component);
+	
+	    function ReactSwipe() {
+	      _classCallCheck(this, ReactSwipe);
+	
+	      var _this = _possibleConstructorReturn(this, (ReactSwipe.__proto__ || Object.getPrototypeOf(ReactSwipe)).call(this));
+	
+	      _this._handleSwipeStart = _this._handleSwipeStart.bind(_this);
+	      _this._handleSwipeMove = _this._handleSwipeMove.bind(_this);
+	      _this._handleSwipeEnd = _this._handleSwipeEnd.bind(_this);
+	      return _this;
+	    }
+	
+	    _createClass(ReactSwipe, [{
+	      key: '_handleSwipeStart',
+	      value: function _handleSwipeStart(e) {
+	        var _e$touches$ = e.touches[0];
+	        var pageX = _e$touches$.pageX;
+	        var pageY = _e$touches$.pageY;
+	
+	        this.touchStart = { pageX: pageX, pageY: pageY };
+	        this.props.onSwipeStart();
+	      }
+	    }, {
+	      key: '_handleSwipeMove',
+	      value: function _handleSwipeMove(e) {
+	        var deltaX = e.touches[0].pageX - this.touchStart.pageX;
+	        var deltaY = e.touches[0].pageY - this.touchStart.pageY;
+	        this.swiping = true;
+	
+	        // handling the responsability of cancelling the scroll to
+	        // the component handling the event
+	        var shouldPreventDefault = this.props.onSwipeMove({
+	          x: deltaX,
+	          y: deltaY
+	        });
+	
+	        if (shouldPreventDefault) {
+	          e.preventDefault();
+	        }
+	
+	        this.touchPosition = { deltaX: deltaX, deltaY: deltaY };
+	      }
+	    }, {
+	      key: '_handleSwipeEnd',
+	      value: function _handleSwipeEnd() {
+	        if (this.swiping) {
+	          if (this.touchPosition.deltaX < 0) {
+	            this.props.onSwipeLeft(1);
+	          } else if (this.touchPosition.deltaX > 0) {
+	            this.props.onSwipeRight(1);
+	          }
+	          if (this.touchPosition.deltaY < 0) {
+	            this.props.onSwipeUp(1);
+	          } else if (this.touchPosition.deltaY > 0) {
+	            this.props.onSwipeDown(1);
+	          }
+	        }
+	        this.props.onSwipeEnd();
+	        this.touchStart = null;
+	        this.swiping = false;
+	        this.touchPosition = null;
+	      }
+	    }, {
+	      key: 'render',
+	      value: function render() {
+	        return _react2.default.createElement(
+	          this.props.tagName,
+	          {
+	            onTouchMove: this._handleSwipeMove,
+	            onTouchStart: this._handleSwipeStart,
+	            onTouchEnd: this._handleSwipeEnd,
+	            className: this.props.className,
+	            style: this.props.style
+	          },
+	          this.props.children
+	        );
+	      }
+	    }]);
+	
+	    return ReactSwipe;
+	  }(_react.Component);
+	
+	  ReactSwipe.propTypes = {
+	    tagName: _react.PropTypes.string,
+	    className: _react.PropTypes.string,
+	    style: _react.PropTypes.object,
+	    children: _react.PropTypes.node,
+	    onSwipeUp: _react.PropTypes.func,
+	    onSwipeDown: _react.PropTypes.func,
+	    onSwipeLeft: _react.PropTypes.func,
+	    onSwipeRight: _react.PropTypes.func,
+	    onSwipeStart: _react.PropTypes.func,
+	    onSwipeMove: _react.PropTypes.func,
+	    onSwipeEnd: _react.PropTypes.func
+	  };
+	  ReactSwipe.defaultProps = {
+	    tagName: 'div',
+	    onSwipeUp: function onSwipeUp() {},
+	    onSwipeDown: function onSwipeDown() {},
+	    onSwipeLeft: function onSwipeLeft() {},
+	    onSwipeRight: function onSwipeRight() {},
+	    onSwipeStart: function onSwipeStart() {},
+	    onSwipeMove: function onSwipeMove() {},
+	    onSwipeEnd: function onSwipeEnd() {}
+	  };
+	
+	
+	  ReactSwipe.displayName = 'ReactSwipe';
+	
+	  exports.default = ReactSwipe;
+	});
+
+/***/ },
+/* 489 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(158);
+	var klass = __webpack_require__(483);
+	var has3d = __webpack_require__(486)();
+	var outerWidth = __webpack_require__(490).outerWidth;
+	var CSSTranslate = __webpack_require__(485);
+	var Swipe = __webpack_require__(487);
+	
+	// react-swipe was compiled using babel
+	Swipe = Swipe.default;
+	
+	module.exports = React.createClass({
+	    displayName: 'exports',
+	
+	
+	    propsTypes: {
+	        children: React.PropTypes.element.isRequired,
+	        selectedItem: React.PropTypes.number
+	    },
+	
+	    getDefaultProps: function getDefaultProps() {
+	        return {
+	            selectedItem: 0,
+	            axis: 'horizontal'
+	        };
+	    },
+	    getInitialState: function getInitialState() {
+	        return {
+	            selectedItem: this.props.selectedItem,
+	            hasMount: false,
+	            firstItem: this.getFirstItem(this.props.selectedItem)
+	        };
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(props, state) {
+	        if (props.selectedItem !== this.state.selectedItem) {
+	            this.setState({
+	                selectedItem: props.selectedItem,
+	                firstItem: this.getFirstItem(props.selectedItem)
+	            });
+	        }
+	    },
+	    componentWillMount: function componentWillMount() {
+	        // as the widths are calculated, we need to resize
+	        // the carousel when the window is resized
+	        window.addEventListener("resize", this.updateStatics);
+	        // issue #2 - image loading smaller
+	        window.addEventListener("DOMContentLoaded", this.updateStatics);
+	    },
+	    componentWillUnmount: function componentWillUnmount() {
+	        // removing listeners
+	        window.removeEventListener("resize", this.updateStatics);
+	        window.removeEventListener("DOMContentLoaded", this.updateStatics);
+	    },
+	    componentDidMount: function componentDidMount(nextProps) {
+	        // when the component is rendered we need to calculate
+	        // the container size to adjust the responsive behaviour
+	        this.updateStatics();
+	
+	        var defaultImg = ReactDOM.findDOMNode(this.thumb0).getElementsByTagName('img')[0];
+	        defaultImg.addEventListener('load', this.setMountState);
+	    },
+	    updateStatics: function updateStatics() {
+	        var total = this.props.children.length;
+	        this.wrapperSize = this.itemsWrapper.clientWidth;
+	        this.itemSize = outerWidth(this.thumb0);
+	        this.visibleItems = Math.floor(this.wrapperSize / this.itemSize);
+	        this.lastPosition = total - this.visibleItems;
+	        this.showArrows = this.visibleItems < total;
+	    },
+	    setMountState: function setMountState() {
+	        this.setState({ hasMount: true });
+	    },
+	    handleClickItem: function handleClickItem(index, item) {
+	        var handler = this.props.onSelectItem;
+	
+	        if (typeof handler === 'function') {
+	            handler(index, item);
+	        }
+	    },
+	    onSwipeStart: function onSwipeStart() {
+	        this.setState({
+	            swiping: true
+	        });
+	    },
+	    onSwipeEnd: function onSwipeEnd() {
+	        this.setState({
+	            swiping: false
+	        });
+	    },
+	    onSwipeMove: function onSwipeMove(deltaX) {
+	        var _this = this;
+	
+	        var leftBoundry = 0;
+	        var list = ReactDOM.findDOMNode(this.itemList);
+	        var wrapperSize = list.clientWidth;
+	        var visibleItems = Math.floor(wrapperSize / this.itemSize);
+	
+	        var currentPosition = -this.state.firstItem * this.itemSize;
+	        var lastLeftBoundry = -this.visibleItems * this.itemSize;
+	
+	        // prevent user from swiping left out of boundaries
+	        if (currentPosition === leftBoundry && deltaX > 0) {
+	            deltaX = 0;
+	        }
+	
+	        // prevent user from swiping right out of boundaries
+	        if (currentPosition === lastLeftBoundry && deltaX < 0) {
+	            deltaX = 0;
+	        }
+	
+	        var position = currentPosition + 100 / (wrapperSize / deltaX) + '%';
+	
+	        // if 3d isn't available we will use left to move
+	        ['WebkitTransform', 'MozTransform', 'MsTransform', 'OTransform', 'transform', 'msTransform'].forEach(function (prop) {
+	            list.style[prop] = CSSTranslate(position, _this.props.axis);
+	        });
+	    },
+	    slideRight: function slideRight(positions) {
+	        this.moveTo(this.state.firstItem - (typeof positions === 'Number' ? positions : 1));
+	    },
+	    slideLeft: function slideLeft(positions) {
+	        this.moveTo(this.state.firstItem + (typeof positions === 'Number' ? positions : 1));
+	    },
+	    moveTo: function moveTo(position) {
+	        // position can't be lower than 0
+	        position = position < 0 ? 0 : position;
+	        // position can't be higher than last postion
+	        position = position >= this.lastPosition ? this.lastPosition : position;
+	
+	        this.setState({
+	            firstItem: position,
+	            // if it's not a slider, we don't need to set position here
+	            selectedItem: this.state.selectedItem
+	        });
+	    },
+	    getFirstItem: function getFirstItem(selectedItem) {
+	        if (!this.showArrows) {
+	            return 0;
+	        }
+	
+	        var firstItem = selectedItem;
+	
+	        if (selectedItem >= this.lastPosition) {
+	            firstItem = this.lastPosition;
+	        }
+	
+	        if (selectedItem < this.state.firstItem + this.visibleItems) {
+	            firstItem = this.state.firstItem;
+	        }
+	
+	        if (selectedItem < this.state.firstItem) {
+	            firstItem = selectedItem;
+	        }
+	
+	        return firstItem;
+	    },
+	    renderItems: function renderItems() {
+	        var _this2 = this;
+	
+	        return React.Children.map(this.props.children, function (item, index) {
+	            var itemClass = klass.ITEM(false, index === _this2.state.selectedItem && _this2.state.hasMount);
+	
+	            var img = item;
+	
+	            if (item.type !== "img") {
+	                img = item.props.children.filter(function (children) {
+	                    return children.type === "img";
+	                })[0];
+	            }
+	
+	            if (img.length) {
+	                console.log(img, img.length, "No images found! Can't build the thumb list");
+	            }
+	
+	            return React.createElement(
+	                'li',
+	                { key: index, ref: function ref(node) {
+	                        return _this2["thumb" + index] = node;
+	                    }, className: itemClass,
+	                    onClick: _this2.handleClickItem.bind(_this2, index, item) },
+	                img
+	            );
+	        });
+	    },
+	    render: function render() {
+	        var _this3 = this;
+	
+	        if (this.props.children.length === 0) {
+	            return null;
+	        }
+	
+	        // show left arrow?
+	        var hasPrev = this.showArrows && this.state.firstItem > 0;
+	        // show right arrow
+	        var hasNext = this.showArrows && this.state.firstItem < this.lastPosition;
+	        // obj to hold the transformations and styles
+	        var itemListStyles = {};
+	
+	        var currentPosition = -this.state.firstItem * this.itemSize + 'px';
+	
+	        var transformProp = CSSTranslate(currentPosition, this.props.axis);
+	
+	        itemListStyles = {
+	            'WebkitTransform': transformProp,
+	            'MozTransform': transformProp,
+	            'MsTransform': transformProp,
+	            'OTransform': transformProp,
+	            'transform': transformProp,
+	            'msTransform': transformProp
+	        };
+	
+	        return React.createElement(
+	            'div',
+	            { className: klass.CAROUSEL(false) },
+	            React.createElement(
+	                'div',
+	                { className: klass.WRAPPER(false), ref: function ref(node) {
+	                        return _this3.itemsWrapper = node;
+	                    } },
+	                React.createElement('button', { type: 'button', className: klass.ARROW_PREV(!hasPrev), onClick: this.slideRight }),
+	                React.createElement(
+	                    Swipe,
+	                    { tagName: 'ul',
+	                        selectedItem: this.state.selectedItem,
+	                        className: klass.SLIDER(false, this.state.swiping),
+	                        onSwipeLeft: this.slideLeft,
+	                        onSwipeRight: this.slideRight,
+	                        onSwipeMove: this.onSwipeMove,
+	                        onSwipeStart: this.onSwipeStart,
+	                        onSwipeEnd: this.onSwipeEnd,
+	                        style: itemListStyles,
+	                        ref: function ref(node) {
+	                            return _this3.itemList = node;
+	                        } },
+	                    this.renderItems()
+	                ),
+	                React.createElement('button', { type: 'button', className: klass.ARROW_NEXT(!hasNext), onClick: this.slideLeft })
+	            )
+	        );
+	    }
+	});
+
+/***/ },
+/* 490 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = {
+		outerWidth: function outerWidth(el) {
+			var width = el.offsetWidth;
+			var style = getComputedStyle(el);
+	
+			width += parseInt(style.marginLeft) + parseInt(style.marginRight);
+			return width;
+		}
+	};
+
+/***/ },
+/* 491 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Gallery = function (_Component) {
+		_inherits(Gallery, _Component);
+	
+		function Gallery(_ref) {
+			var initialPhoto = _ref.initialPhoto;
+	
+			_classCallCheck(this, Gallery);
+	
+			var _this = _possibleConstructorReturn(this, (Gallery.__proto__ || Object.getPrototypeOf(Gallery)).call(this));
+	
+			_this.state = { photo: initialPhoto };
+			return _this;
+		}
+	
+		_createClass(Gallery, [{
+			key: 'onPhotoChanged',
+			value: function onPhotoChanged(newPhoto) {
+				this.setState({ photo: newPhoto });
+				this.props.callbackParent(newPhoto);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+	
+				var car = this.props.car;
+				return _react2.default.createElement(
+					'div',
+					{ className: 'gallery' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'container' },
+						_react2.default.createElement('img', { src: car.photos[0], onClick: function onClick() {
+								return _this2.onPhotoChanged(car.photos[0]);
+							} }),
+						_react2.default.createElement('img', { src: car.photos[1], onClick: function onClick() {
+								return _this2.onPhotoChanged(car.photos[1]);
+							} }),
+						_react2.default.createElement('img', { src: car.photos[2], onClick: function onClick() {
+								return _this2.onPhotoChanged(car.photos[2]);
+							} }),
+						_react2.default.createElement('img', { src: car.photos[3], onClick: function onClick() {
+								return _this2.onPhotoChanged(car.photos[3]);
+							} }),
+						_react2.default.createElement('img', { src: car.photos[4], onClick: function onClick() {
+								return _this2.onPhotoChanged(car.photos[4]);
+							} }),
+						_react2.default.createElement('img', { src: car.photos[5], onClick: function onClick() {
+								return _this2.onPhotoChanged(car.photos[5]);
+							} })
+					)
+				);
+			}
+		}]);
+	
+		return Gallery;
+	}(_react.Component);
+	
+	exports.default = Gallery;
+
+/***/ },
+/* 492 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Block = function (_Component) {
+		_inherits(Block, _Component);
+	
+		function Block(props) {
+			_classCallCheck(this, Block);
+	
+			return _possibleConstructorReturn(this, (Block.__proto__ || Object.getPrototypeOf(Block)).call(this, props));
+		}
+	
+		_createClass(Block, [{
+			key: 'render',
+			value: function render() {
+				var car = this.props.car;
+				return _react2.default.createElement(
+					'div',
+					{ className: 'block' },
+					_react2.default.createElement(
+						'table',
+						null,
+						_react2.default.createElement(
+							'tbody',
+							null,
+							_react2.default.createElement(
+								'tr',
+								null,
+								_react2.default.createElement(
+									'th',
+									null,
+									_react2.default.createElement(
+										'h4',
+										null,
+										this.props.title
+									)
+								)
+							),
+							_react2.default.createElement(
+								'tr',
+								null,
+								_react2.default.createElement(
+									'td',
+									null,
+									_react2.default.createElement(
+										'h4',
+										null,
+										'Cylinders'
+									)
+								),
+								_react2.default.createElement(
+									'td',
+									null,
+									_react2.default.createElement(
+										'h4',
+										{ className: 'detail-data' },
+										car.cylinders
+									)
+								)
+							),
+							_react2.default.createElement(
+								'tr',
+								null,
+								_react2.default.createElement(
+									'td',
+									null,
+									_react2.default.createElement(
+										'h4',
+										null,
+										'City MPG'
+									)
+								),
+								_react2.default.createElement(
+									'td',
+									null,
+									_react2.default.createElement(
+										'h4',
+										{ className: 'detail-data' },
+										car.city_mpg,
+										' MPG'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'tr',
+								null,
+								_react2.default.createElement(
+									'td',
+									null,
+									_react2.default.createElement(
+										'h4',
+										null,
+										'Highway MPG'
+									)
+								),
+								_react2.default.createElement(
+									'td',
+									null,
+									_react2.default.createElement(
+										'h4',
+										{ className: 'detail-data' },
+										car.highway_mpg,
+										' MPG'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'tr',
+								null,
+								_react2.default.createElement(
+									'td',
+									{ className: 'td-lastchild' },
+									_react2.default.createElement(
+										'h4',
+										null,
+										'Engine'
+									)
+								),
+								_react2.default.createElement(
+									'td',
+									{ className: 'td-lastchild' },
+									_react2.default.createElement(
+										'h4',
+										{ className: 'detail-data' },
+										car.engine
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Block;
+	}(_react.Component);
+	
+	exports.default = Block;
 
 /***/ }
 /******/ ]);

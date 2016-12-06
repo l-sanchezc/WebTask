@@ -22,7 +22,7 @@ db.open(function(err, db) {
 exports.findByItemNumber = function(req, res) {
     var id = req.params.id;
     db.collection('cars', function(err, collection) {
-        collection.find({'item_number': id}).limit(1).next(function(err, item) {
+        collection.find({'item_number': id}),(function(err, item) {
             res.send(item);
             console.log('Retrieving car: ' + id);
         });

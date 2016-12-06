@@ -7,12 +7,12 @@ class PhoneDescriptions extends Component {
   		super(props);
 	}
 	render(){
-		const car = {this.props.car};
-		const minPrice = car.min_price;
+		const car = this.props.car;
+		let minPrice = car.min_price;
 		minPrice = numbro(minPrice).formatCurrency('$0,0');
-		const maxPrice = car.max_price;
+		let maxPrice = car.max_price;
 		maxPrice = numbro(maxPrice).formatCurrency('$0,0');
-		const mileage = car.mileage;
+		let mileage = car.mileage;
 		mileage= numbro(mileage).format('0,0');
 		return (
 			<div className="wrapper">

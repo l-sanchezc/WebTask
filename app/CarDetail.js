@@ -10,25 +10,31 @@ import Gallery from './components/Gallery'
 import Block from './components/Block'
 
 class CarDetail extends Component {
-	handleResponse(photo) {
+	constructor(props) {
+    	super(props)
+    	this.state = { car: {}, photo:''}
 	}
 	componentDidMount(){
 		var fetchData = axios.get('http://localhost:3000/cars/#1395P')
 			.then(response =>	{
-				console.log(response.data);
-				this.setState({car: response.data});
+				this.setState({car: response.data[0]});
+				this.setState({photo: this.state.car.photos[0]});
 		})
 	}
+	_handleClick(newPhoto){
+		this.setState({photo: newPhoto});
+	}
 	render(){
+		if (Object.keys(this.state.car).length >15){
 		return (
 			<div>  
 				<Navbar />
 				<MediaQuery query='(min-width: 1024px)'> 
 					<div className="wrapper">
-						<img className='photo' src='/public/img/0.jpg'/>
+						<img className='photo' src={this.state.photo}/>
 						<Descriptions car={this.state.car}/>
 					</div>
-					<Gallery handleResponse={this.handleResponse} car={this.state.car} />
+					<Gallery car={this.state.car} initialPhoto={this.state.photo} callbackParent={(newPhoto) => this._handleClick(newPhoto)}/>
 					<div className="wrap-block">
 						<Block title={'EXTERIOR'} car={this.state.car}/>
 						<Block title={'PERFORMANCE'} car={this.state.car}/>
@@ -47,6 +53,9 @@ class CarDetail extends Component {
 				</MediaQuery>
 			</div>
 		)
+	} else {
+		return null;
+	}
 	}
 }
 
