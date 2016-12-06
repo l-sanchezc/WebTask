@@ -32,6 +32,7 @@ app.put('/cars/:id', car.updateCar);
 //DELETE a car in the database
 app.delete('/cars/:id', car.deleteCar);
 
+//Create the server
 var server = require('http').createServer(app);
 server.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));

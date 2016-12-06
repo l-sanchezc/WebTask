@@ -4,9 +4,13 @@ var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
 
+//We create the connection of the database on the address localhost:27017
 var server = new Server('localhost', 27017, {auto_reconnect: true});
+
+//It creates the database with the name cardb
 var db = new Db('cardb', server);
 
+//It cheks if the database already exists
 db.open(function(err, db) {
     if(!err) {
         console.log("Connected to 'cardb' database");
@@ -58,7 +62,7 @@ exports.updateCar = function(req, res) {
     console.log('Updating car: ' + id);
     console.log(JSON.stringify(car));
     db.collection('cars', function(err, collection) {
-        collection.updateOne({'_id': id}, car, {safe:true}, function(err, result) {
+        collection.updateOne({'item_number': id}, car, {safe:true}, function(err, result) {
             if (err) {
                 console.log('Error updating car: ' + err);
                 res.send({'error':'An error has occurred'});
@@ -74,7 +78,7 @@ exports.deleteCar = function(req, res) {
     var id = req.params.id;
     console.log('Deleting car: ' + id);
     db.collection('cars', function(err, collection) {
-        collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
+        collection.remove({'item_number':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
             if (err) {
                 res.send({'error':'An error has occurred - ' + err});
             } else {

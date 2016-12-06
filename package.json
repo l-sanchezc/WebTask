@@ -2,7 +2,7 @@
   "name": "webtask",
   "version": "2.1.0",
   "description": "Web application using ReactJS and a Rest API using Node.js to feed the web with data from a mongodb database.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "webpack-watch": "webpack -w",
@@ -10,6 +10,15 @@
     "dev": "concurrently --kill-others \"npm run webpack-watch\" \"npm run express-server\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+    "repository": {
+    "type": "git",
+    "url": "https://github.com/lsanchezc/WebTask"
+  },
+  "keywords": [
+    "reactjs",
+    "mongodb",
+    "nodejs"
+  ],
   "author": "Lazaro Sanchez Campos",
   "license": "MIT",
   "dependencies": {

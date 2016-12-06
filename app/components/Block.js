@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 
 class Block extends Component {
-	constructor (props) {
-  		super(props);
-	}
 	render(){
 		const car = this.props.car;
 		return (
@@ -11,6 +8,7 @@ class Block extends Component {
 			<table>
 				<tbody>
 					<tr>
+						{/* Name of the title that we passed from the parent */}
 		   				<th><h4>{this.props.title}</h4></th>
 		   			</tr>
 				  	<tr>

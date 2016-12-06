@@ -3,9 +3,10 @@ import {Glyphicon} from "react-bootstrap"
 import 	numbro from "numbro"
 
 class PhoneDescriptions extends Component {
-	constructor (props) {
-  		super(props);
-	}
+	/*
+		We create different local variables (minPrice, maxPrice, mileage) and give them values from car.
+		We also give them a perfect format using the module numbro.
+	*/
 	render(){
 		const car = this.props.car;
 		let minPrice = car.min_price;

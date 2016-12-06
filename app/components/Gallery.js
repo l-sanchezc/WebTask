@@ -1,10 +1,17 @@
 import React, { Component } from 'react'
 
 class Gallery extends Component {
+	/*
+		We get the initial photo from the parent (CarDetail)
+	*/
 	constructor ({initialPhoto}) {
   		super();
   		this.state = {photo: initialPhoto}
 	}
+	/*
+		We use this method to pass to the parent the new path of the photo 
+		selected by the user using the method callbackParent (see CarDetail)
+	*/
 	onPhotoChanged(newPhoto){
 		this.setState({ photo: newPhoto});
 		this.props.callbackParent(newPhoto);

@@ -3,9 +3,7 @@ import MediaQuery from 'react-responsive'
 import {Glyphicon} from "react-bootstrap"
 
 class Navbar extends Component {
-
 	render(){
-
 		return (
 		<div className="navBar">
 			<MediaQuery query='(min-width: 1024px)'>   
